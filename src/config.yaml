@@ -1,0 +1,9 @@
+base_activities:
+  - create
+  - search
+  - order
+  - deduce
+  - learn
+  - experience
+  - synced
+  - others
