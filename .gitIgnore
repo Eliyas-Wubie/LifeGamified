@@ -1,0 +1,42 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.pyre/
+.ruff_cache/
+
+# --- Poetry ---
+.poetry/
+poetry.lock.backup
+dist/
+build/
+
+# If you use Poetry's in-project virtualenv
+.venv/
+
+# --- Virtual environments (just in case) ---
+venv/
+ENV/
+env/
+
+# --- IDEs & Editors ---
+.vscode/
+.idea/
+*.iml
+
+# --- OS files ---
+.DS_Store
+Thumbs.db
+
+# --- Logs ---
+*.log
+
+# --- Coverage ---
+.coverage
+htmlcov/
