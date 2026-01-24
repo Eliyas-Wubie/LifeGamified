@@ -40,3 +40,6 @@ Thumbs.db
 # --- Coverage ---
 .coverage
 htmlcov/
+
+TODO.md
+local_life_gamified.db

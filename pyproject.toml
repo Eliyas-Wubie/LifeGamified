@@ -8,9 +8,16 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "sqlalchemy (>=2.0.46,<3.0.0)"
+    "sqlalchemy (>=2.0.46,<3.0.0)",
+    "pyyaml (>=6.0.3,<7.0.0)",
+    "pytest (>=9.0.2,<10.0.0)"
 ]
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+pythonpath = ["."]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
