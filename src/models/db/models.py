@@ -9,9 +9,14 @@ class BaseActivityORM(Base):
     __tablename__="base_activities"
     
     id: Mapped[int]= mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(String, nullable=False)
+    name: Mapped[str] = mapped_column(String, nullable=False, unique=True)
     baseXP: Mapped[int] = mapped_column(Integer, nullable=False)
+    activity_type: Mapped[str]=mapped_column(String, nullable=False)
     strain: Mapped[list["BaseActivityAttributesORM"]] = relationship(
+        back_populates="base_activity",
+        cascade="all, delete-orphan"
+    )
+    compound_activity_links: Mapped[list["CompoundActivityBaseActivityORM"]] = relationship(
         back_populates="base_activity",
         cascade="all, delete-orphan"
     )
@@ -20,13 +25,17 @@ class CompoundActivityORM(Base):
     __tablename__ = "compound_activity"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(nullable=False)
+    name: Mapped[str] = mapped_column(nullable=False, unique=True)
     xp: Mapped[int] = mapped_column(nullable=False)
     base_activities_gage: Mapped[list["CompoundActivityBaseActivityORM"]] = relationship(
         back_populates="compound_activity",
         cascade="all, delete-orphan"
     )
     profession_links: Mapped[list["CompoundActivityProfessionORM"]] = relationship(
+        back_populates="compound_activity",
+        cascade="all, delete-orphan"
+    )
+    mission_links: Mapped[list["MissionCompoundActivityORM"]] = relationship(
         back_populates="compound_activity",
         cascade="all, delete-orphan"
     )
@@ -38,23 +47,24 @@ class MissionsORM(Base):
     deadline: Mapped[DATETIME]=mapped_column(DATETIME, nullable=True)
     bonus:Mapped[dict[str,Any]]=mapped_column(JSON, nullable=True)
     
-    compound_activities:Mapped["MissionCompoundActivityORM"]=relationship(
+    compound_activities:Mapped[list["MissionCompoundActivityORM"]]=relationship(
         back_populates="mission"
     )
     
-    accomplishments:Mapped["MissionAccomplishmentORM"]=relationship(
+    accomplishments:Mapped[list["MissionAccomplishmentORM"]]=relationship(
         back_populates="mission"
     )
     
-    profession:Mapped["MissionProfessionORM"]=relationship(
+    profession:Mapped[list["MissionProfessionORM"]]=relationship(
         back_populates="mission"
     )
+    
         
 class ProfessionORM(Base):
     __tablename__ = "professions"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    label: Mapped[str] = mapped_column(String, nullable=False)
+    label: Mapped[str] = mapped_column(String, nullable=False, unique=True)
     status: Mapped[str] = mapped_column(String, nullable=False)
 
     parent_id: Mapped[int | None] = mapped_column(ForeignKey("professions.id"))
@@ -78,7 +88,7 @@ class ProfessionORM(Base):
         cascade="all, delete-orphan"
     )
     accomplishments_link:Mapped["AccomplishmentsProfessionORM"]=relationship(
-        back_populates="professions_link"
+        back_populates="professions"
     )
     # relation to accomplishments
 
@@ -93,17 +103,20 @@ class AccomplishmentORM(Base):
         back_populates="accomplishments",
         cascade="all, delete-orphan"
         )
-    attribute_link:Mapped["AccomplishmentsAttributesORM"]=relationship(
+    attribute_link:Mapped[list["AccomplishmentsAttributesORM"]]=relationship(
         back_populates="accomplishments"
     )
-    profession_link:Mapped["AccomplishmentsProfessionORM"]=relationship(
+    profession_link:Mapped[list["AccomplishmentsProfessionORM"]]=relationship(
+        back_populates="accomplishments"
+    )
+    missions:Mapped[list["MissionAccomplishmentORM"]]=relationship(
         back_populates="accomplishments"
     )
 
 class TitlesORM(Base):
     __tablename__ =  "titles"
     id: Mapped[int]=mapped_column(Integer, primary_key=True)
-    name: Mapped[str]=mapped_column(Integer, nullable=False)
+    name: Mapped[str]=mapped_column(Integer, nullable=False, unique=True)
     description: Mapped[str]=mapped_column(String, nullable=False)
     # relation to accomplishments
     accomplishment_link:Mapped[list["AccomplishmentsTitlesORM"]]=relationship(
@@ -115,11 +128,14 @@ class AttributesORM(Base):
     __tablename__ = "attributes"
     
     id: Mapped[int]=mapped_column(Integer, primary_key=True)
-    name: Mapped[str]=mapped_column(String, nullable=False)
+    name: Mapped[str]=mapped_column(String, nullable=False, unique=True)
     area:Mapped[str]=mapped_column(String, nullable=False)
     custom:Mapped[bool]=mapped_column(Boolean, nullable=False)
     current_value:Mapped[int]=mapped_column(Boolean, nullable=False)
-    contributor_activities:Mapped["BaseActivityAttributesORM"]=relationship(
+    contributor_activities:Mapped[list["BaseActivityAttributesORM"]]=relationship(
+        back_populates="attributes"
+    )
+    accomplishment_link:Mapped[list["AccomplishmentsAttributesORM"]]=relationship(
         back_populates="attributes"
     )
     # no relation here
@@ -164,7 +180,16 @@ class CompoundActivityBaseActivityORM(Base):
         ForeignKey("base_activities.id"), 
         primary_key=True
         )
-    
+    rating: Mapped[int] = mapped_column(
+        Integer,
+        nullable=False
+    )
+    __table_args__ = (
+        CheckConstraint("rating BETWEEN 1 AND 10", name="rating_range"),
+    )
+    base_activity: Mapped["BaseActivityORM"] = relationship(
+        back_populates="compound_activity_links"
+    )
     compound_activity: Mapped["CompoundActivityORM"] = relationship(
         back_populates="base_activities_gage"
     )
@@ -209,8 +234,20 @@ class MissionCompoundActivityORM(Base):
         ForeignKey("compound_activity.id"),
         primary_key=True
     )
+    rating: Mapped[int] = mapped_column(
+        Integer,
+        nullable=False
+    )
+
+    __table_args__ = (
+        CheckConstraint("rating BETWEEN 1 AND 10", name="rating_range"),
+    )
+
     mission:Mapped["MissionsORM"]=relationship(
         back_populates="compound_activities"
+    )
+    compound_activity:Mapped["CompoundActivityORM"]=relationship(
+        back_populates="mission_links"
     )
     
 class MissionAccomplishmentORM(Base):
@@ -219,12 +256,15 @@ class MissionAccomplishmentORM(Base):
         ForeignKey("missions.id"),
         primary_key=True
     )
-    accomplishments_id:Mapped[int]=mapped_column(
+    accomplishment_id:Mapped[int]=mapped_column(
         ForeignKey("accomplishments.id"),
         primary_key=True
     )
     mission:Mapped["MissionsORM"]=relationship(
         back_populates="accomplishments"
+    )
+    accomplishments:Mapped["AccomplishmentORM"]=relationship(
+        back_populates="missions"
     )
 
 class MissionProfessionORM(Base):
@@ -276,8 +316,15 @@ class AccomplishmentsAttributesORM(Base):
         ForeignKey("attributes.id"),
         primary_key=True
         )
+    rating:Mapped[int]=mapped_column(Integer, nullable=False)
+    __table_args__ = (
+        CheckConstraint("rating BETWEEN 1 AND 10", name="rating_range"),
+    )
     accomplishments:Mapped["AccomplishmentORM"]=relationship(
         back_populates="attribute_link"
+        )
+    attributes:Mapped["AttributesORM"]=relationship(
+        back_populates="accomplishment_link"
         )
 
 class AccomplishmentsProfessionORM(Base):
@@ -287,16 +334,17 @@ class AccomplishmentsProfessionORM(Base):
         ForeignKey("accomplishments.id"),
         primary_key=True
         )
-    proffession_id:Mapped[int]=mapped_column(
+    profession_id:Mapped[int]=mapped_column(
         ForeignKey("professions.id"),
         primary_key=True
         )
+    rating:Mapped[int]=mapped_column(Integer, nullable=False)
+    __table_args__ = (
+        CheckConstraint("rating BETWEEN 1 AND 10", name="rating_range"),
+    )
     accomplishments:Mapped["AccomplishmentORM"]=relationship(
         back_populates="profession_link"
         )
-    professions_link:Mapped["ProfessionORM"]=relationship(
+    professions:Mapped["ProfessionORM"]=relationship(
         back_populates="accomplishments_link"
         )
-
-
-

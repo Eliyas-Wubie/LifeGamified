@@ -1,5 +1,4 @@
 
-from abc import ABC, abstractmethod
 from src.models.state.reward_states import Reward
 from src.utils.converters import orm_to_name_value
 from typing import Any
@@ -8,16 +7,45 @@ if TYPE_CHECKING:
     from profession import Profession
     from status import Attributes
 
-class Activity(ABC):
+class Activity:
     def __init__(self, name: str, baseXP:float, strain:list["Attributes"] | None): # adjust strain
         self._id: int=0
         self._name: str=name
         self._baseXP: float=baseXP
+        self._activity_type: str = "other"
         self._strain: Any = [] if strain is None else strain
+        self._compound_activity_links: Any =[]
+        self._load:int=0
+        
+    
+    @property
+    def load(self):
+        return self._load
+
+    @load.setter
+    def load(self, new_load:int):
+        self._load=new_load
+      
 
     @property
     def id(self):
         return self._id
+    
+    @property
+    def compound_activity_links(self):
+        return self._compound_activity_links
+
+    @compound_activity_links.setter
+    def compound_activity_links(self, new_compound_activity_links:str):
+        self._compound_activity_links=new_compound_activity_links
+    
+    @property
+    def activity_type(self):
+        return self._activity_type
+
+    @activity_type.setter
+    def activity_type(self, new_activity_type:str):
+        self._activity_type=new_activity_type
     
     @id.setter
     def id(self, new_id:int):
@@ -35,9 +63,10 @@ class Activity(ABC):
     def strain(self):
         return self._strain
     
-    @abstractmethod
     def perform(self):
-        pass
+        reward=Reward(xp=self.baseXP, ap=[], pp=[])
+        reward.save_attributes(self.strain)
+        return reward
 
 class BaseActivityClassFactory:
     _instance = None
@@ -62,17 +91,29 @@ class BaseActivityClassFactory:
             raise TypeError(f"failed to create class {class_name} : {e}")
 
 class CompoundActivity:
-    def __init__(self, name: str, xp:float, activities:list["Activity"] | None, profession_load: list["Profession"] | None, accomplishment: list["Activity"] | None):
+    def __init__(self, name: str, xp:float, activities:list["Activity"] | None, profession_load: list["Profession"] | None):
         self._id: int=0
         self._name: str=name
         self._xp: float=xp
         self._activities: Any=[] if activities is None else activities
         self._profession_load: Any=[] if profession_load is None else profession_load
-        self._accomplishment: Any=[] if accomplishment is None else accomplishment
+        self.load=0
+        
+    @property
+    def load(self):
+        return self._load
     
+    @load.setter
+    def load(self, load:int):
+        self._load=load
+        
     @property
     def id(self):
         return self._id
+    
+    @id.setter
+    def id(self, id:int):
+        self._id=id
     
     @property
     def name(self):
@@ -89,10 +130,6 @@ class CompoundActivity:
     @property
     def professional_load(self):
         return self._profession_load
-    
-    @property
-    def accomplishment(self):
-        return self._accomplishment
     
     def perform(self):
         # calculate XP, AP, PP and return
