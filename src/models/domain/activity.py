@@ -7,14 +7,14 @@ if TYPE_CHECKING:
     from profession import Profession
     from status import Attributes
 
-class Activity:
-    def __init__(self, name: str, baseXP:float, strain:list["Attributes"] | None): # adjust strain
+class BaseActivity:
+    def __init__(self, name: str, xp:float, attributes:list["Attributes"] | None): # adjust attributes
         self._id: int=0
         self._name: str=name
-        self._baseXP: float=baseXP
+        self._xp: float=xp
         self._activity_type: str = "other"
-        self._strain: Any = [] if strain is None else strain
-        self._compound_activity_links: Any =[]
+        self._attributes: Any = [] if attributes is None else attributes
+        self._compound_activities: Any =[]
         self._load:int=0
         
     
@@ -32,12 +32,12 @@ class Activity:
         return self._id
     
     @property
-    def compound_activity_links(self):
-        return self._compound_activity_links
+    def compound_activities(self):
+        return self._compound_activities
 
-    @compound_activity_links.setter
-    def compound_activity_links(self, new_compound_activity_links:str):
-        self._compound_activity_links=new_compound_activity_links
+    @compound_activities.setter
+    def compound_activities(self, new_compound_activities:str):
+        self._compound_activities=new_compound_activities
     
     @property
     def activity_type(self):
@@ -56,48 +56,27 @@ class Activity:
         return self._name
 
     @property
-    def baseXP(self):
-        return self._baseXP
+    def xp(self):
+        return self._xp
     
     @property
-    def strain(self):
-        return self._strain
+    def attributes(self):
+        return self._attributes
     
     def perform(self):
-        reward=Reward(xp=self.baseXP, ap=[], pp=[])
-        reward.save_attributes(self.strain)
+        reward=Reward(xp=self.xp, ap=[], pp=[])
+        reward.save_attributes(self.attributes)
         return reward
 
-class BaseActivityClassFactory:
-    _instance = None
-    
-    def __new__(cls, *args:Any, **kwargs:Any):
-        if not cls._instance:
-            cls._instance=super().__new__(cls)
-        return cls._instance
-    
-    def create_activity_class(self, class_name:str, base_class:Any, attrs:dict[str, Any]| None):
-        if attrs is None:
-            attrs={}
-        
-        def __init__(self:Any, *args:Any, **kwargs:Any):
-            base_class.__init__(self, *args, **kwargs)
-        
-        attrs["__init__"] = __init__
-        try:
-            return type(class_name, (base_class,), attrs)
-        
-        except TypeError as e:
-            raise TypeError(f"failed to create class {class_name} : {e}")
-
 class CompoundActivity:
-    def __init__(self, name: str, xp:float, activities:list["Activity"] | None, profession_load: list["Profession"] | None):
+    def __init__(self, name: str, xp:float, activities:list["BaseActivity"] | None, professions: list["Profession"] | None):
         self._id: int=0
         self._name: str=name
         self._xp: float=xp
         self._activities: Any=[] if activities is None else activities
-        self._profession_load: Any=[] if profession_load is None else profession_load
-        self.load=0
+        self._professions: Any=[] if professions is None else professions
+        # missions link
+        self._load=0
         
     @property
     def load(self):
@@ -128,13 +107,13 @@ class CompoundActivity:
         return self._activities
     
     @property
-    def professional_load(self):
-        return self._profession_load
+    def professions(self):
+        return self._professions
     
     def perform(self):
         # calculate XP, AP, PP and return
         reward=Reward(xp=self.xp, ap=[], pp=[])
-        reward.save_professions(orm_to_name_value(self.professional_load))
+        reward.save_professions(orm_to_name_value(self.professions))
         reward.extend_rewards([activity.perform() for activity in self.activities])
         return reward
   

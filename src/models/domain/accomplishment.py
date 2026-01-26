@@ -1,11 +1,11 @@
 from typing import Any
 class Accomplishment:
-    def __init__(self, name: str, difficulty: int, attributes:list[Any], professions:list[Any],reward_title:list[Any]):
+    def __init__(self, name: str, difficulty: int, attributes:list[Any], professions:list[Any],titles:list[Any]):
         self._name=name
         self._difficulty=difficulty
-        self._attribute_link=attributes
-        self._profession_link=professions
-        self._title_links=reward_title
+        self._attributes=attributes
+        self._professions=professions
+        self._titles=titles
         # we need a mission link too
         self._id=0
     
@@ -18,12 +18,12 @@ class Accomplishment:
         self._id = new_id
 
     @property
-    def profession_link(self):
-        return self._profession_link
+    def professions(self):
+        return self._professions
     
-    @profession_link.setter
-    def profession_link(self, new_profession_link:int):
-        self._profession_link = new_profession_link
+    @professions.setter
+    def professions(self, new_professions:int):
+        self._professions = new_professions
         
     
     @property
@@ -33,11 +33,11 @@ class Accomplishment:
     def difficulty(self):
         return self._difficulty
     @property
-    def attribute_link(self):
-        return self._attribute_link
+    def attributes(self):
+        return self._attributes
     @property
-    def title_links(self):
-        return self._title_links
+    def titles(self):
+        return self._titles
 
 
 class AccomplishmentManager:

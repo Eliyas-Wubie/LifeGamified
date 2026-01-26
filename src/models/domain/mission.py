@@ -7,6 +7,8 @@ class Mission:
         self._id=0
         self._name=name
         self._compound_activities=compound_activities
+        # accomplishment links
+        # profession links
         self._deadline=deadline
         self._bonus=bonus
         self._load=datetime.now()

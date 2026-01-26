@@ -7,19 +7,19 @@ from src.models.db.session import SessionLocal
 session = SessionLocal()
 
 def profession_orm_to_domain(orm: ProfessionORM) -> Profession:
-    domain = Profession(orm.label, orm.status)
+    domain = Profession(orm.name, orm.status)
     for sub in orm.sub_professions:
         domain.add_sub_profession(profession_orm_to_domain(sub))
     domain.parent=None if orm.parent is None else profession_orm_to_domain(orm.parent)
-    domain.compound_activity_links=[compound_activity_orm_to_domain(c_act.compound_activity) for c_act in orm.compound_activity_links]
+    domain.compound_activities=[compound_activity_orm_to_domain(c_act.compound_activity) for c_act in orm.compound_activities]
     # handle mission links
     # handle accomplishment links
     return domain
 
 def profession_domain_to_orm(domain: Profession) -> ProfessionORM:
-    prof:Any = session.query(ProfessionORM).filter(ProfessionORM.label == domain.label).first()
+    prof:Any = session.query(ProfessionORM).filter(ProfessionORM.name == domain.name).first()
     return prof
-def profession_create_orm_from_domain(
+def create_profession_orm(
     domain: Profession,
     cache: dict[int, ProfessionORM] | None = None,
 ) -> ProfessionORM:
@@ -31,13 +31,13 @@ def profession_create_orm_from_domain(
         return cache[key]
 
     orm = ProfessionORM(
-        label=domain.label,
+        name=domain.name,
         status=domain.status,
     )
     cache[key] = orm
 
     orm.sub_professions = [
-        profession_create_orm_from_domain(child, cache)
+        create_profession_orm(child, cache)
         for child in domain.sub_professions
     ]
 

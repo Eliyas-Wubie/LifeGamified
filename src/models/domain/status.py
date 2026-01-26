@@ -7,15 +7,15 @@ class Attributes:
         self._area: str=area
         self._custom: bool=custom
         self._current_value: float=0
-        self._contributor_activities: list[Any]=[]
+        self._base_activities: list[Any]=[]
     
     @property
-    def contributor_activities(self):
-        return self._contributor_activities
+    def base_activities(self):
+        return self._base_activities
     
-    @contributor_activities.setter
-    def contributor_activities(self, new_list:list[Any]):
-        self._contributor_activities=new_list
+    @base_activities.setter
+    def base_activities(self, new_list:list[Any]):
+        self._base_activities=new_list
     @property
     def custom(self):
         return self._custom
@@ -48,4 +48,8 @@ class Attributes:
     @current_value.setter
     def current_value(self, current_value:int):
         self._current_value=current_value
+        
+    
+    
+# manager class here
     

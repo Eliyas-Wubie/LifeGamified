@@ -4,7 +4,7 @@ class Title:
         self._id=0
         self._name=name
         self._description=description
-        self._accomplishment_links=accomplishments if accomplishments is not None else []
+        self._accomplishments=accomplishments if accomplishments is not None else []
     
     @property
     def id(self):
@@ -23,9 +23,9 @@ class Title:
         return self._description
     
     @property
-    def accomplishment_links(self):
-        return self._accomplishment_links
+    def accomplishments(self):
+        return self._accomplishments
     
-    @accomplishment_links.setter
-    def accomplishment_links(self, new_acc:list[Any]):
-        self._accomplishment_links=new_acc
+    @accomplishments.setter
+    def accomplishments(self, new_acc:list[Any]):
+        self._accomplishments=new_acc
