@@ -1,17 +1,41 @@
 
-from typing import Any
+from typing import Any, TYPE_CHECKING
 from datetime import datetime
 
+if TYPE_CHECKING:
+    from src.models.domain.activity import CompoundActivity
+    from src.models.domain.accomplishment import Accomplishment
+    from src.models.domain.profession import Profession
+    
+
 class Mission:
-    def __init__(self, name:str, compound_activities:list[Any], deadline:datetime, bonus:dict[str,Any]):
-        self._id=0
+    def __init__(
+            self,
+            name:str,
+            description: str | None = None, 
+            deadline: datetime | None = None,
+            bonus: dict[str,Any] | None = None, 
+            compound_activities:list["CompoundActivity"] | None = None,
+            accomplishments:list["Accomplishment"] | None = None,
+            professions:list["Profession"] | None = None
+            ):
+        self._id: int = -1
+        self._load: int = 0
         self._name=name
-        self._compound_activities=compound_activities
-        # accomplishment links
-        # profession links
+        self._description=description
         self._deadline=deadline
         self._bonus=bonus
-        self._load=datetime.now()
+        self._compound_activities= [] if compound_activities is None else compound_activities
+        self._accomplishments= [] if accomplishments is None else accomplishments
+        self._professions= [] if professions is None else professions
+    @property
+    def description(self):
+        return self._description
+    
+    @description.setter
+    def description(self, description:int):
+        self._description=description
+
     @property
     def id(self):
         return self._id

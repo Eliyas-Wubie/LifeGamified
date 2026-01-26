@@ -4,18 +4,27 @@ from src.utils.converters import orm_to_name_value
 from typing import Any
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from profession import Profession
-    from status import Attributes
-
+    from src.models.domain.profession import Profession
+    from src.models.domain.status import Attribute
+    from src.models.domain.mission import Mission
+    
 class BaseActivity:
-    def __init__(self, name: str, xp:float, attributes:list["Attributes"] | None): # adjust attributes
-        self._id: int=0
-        self._name: str=name
-        self._xp: float=xp
-        self._activity_type: str = "other"
-        self._attributes: Any = [] if attributes is None else attributes
-        self._compound_activities: Any =[]
-        self._load:int=0
+    def __init__(
+            self, 
+            name: str, 
+            xp:float, 
+            activity_type: str = "other",
+            attributes:list["Attribute"] | None = None,
+            compound_activities: list["CompoundActivity"] | None = None
+            ): 
+        self._id: int = -1
+        self._load: int = 0
+        self._name = name
+        self._xp = xp
+        self._activity_type = activity_type
+        self._attributes= [] if attributes is None else attributes
+        self._compound_activities = [] if compound_activities is None else compound_activities
+
         
     
     @property
@@ -36,7 +45,7 @@ class BaseActivity:
         return self._compound_activities
 
     @compound_activities.setter
-    def compound_activities(self, new_compound_activities:str):
+    def compound_activities(self, new_compound_activities:list["CompoundActivity"]):
         self._compound_activities=new_compound_activities
     
     @property
@@ -69,14 +78,21 @@ class BaseActivity:
         return reward
 
 class CompoundActivity:
-    def __init__(self, name: str, xp:float, activities:list["BaseActivity"] | None, professions: list["Profession"] | None):
-        self._id: int=0
-        self._name: str=name
-        self._xp: float=xp
-        self._activities: Any=[] if activities is None else activities
-        self._professions: Any=[] if professions is None else professions
-        # missions link
-        self._load=0
+    def __init__(
+            self, 
+            name: str, 
+            xp:float, 
+            activities:list["BaseActivity"] | None = None, 
+            professions: list["Profession"] | None = None, 
+            missions: list["Mission"] | None = None
+        ):
+        self._id: int = -1
+        self._load: int = 0
+        self._name = name
+        self._xp = xp
+        self._activities=[] if activities is None else activities
+        self._professions=[] if professions is None else professions
+        self._missions= [] if missions is None else missions
         
     @property
     def load(self):

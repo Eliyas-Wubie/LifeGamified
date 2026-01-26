@@ -1,27 +1,36 @@
-# create compound activity
-# create a base actvity - sync/other
-# perform a compound activity
 from src.models.db.models import BaseActivityORM, CompoundActivityORM
 from src.models.domain.activity import BaseActivity, CompoundActivity
-from typing import Any
+from typing import Any, TYPE_CHECKING
 from src.models.db.session import SessionLocal
 
+if TYPE_CHECKING:
+    from src.models.domain.status import Attribute
+    from src.models.domain.activity import CompoundActivity
+    from src.models.domain.activity import BaseActivity
+    from src.models.domain.profession import Profession
+    from src.models.domain.mission import Mission
     
+        
+        
 session = SessionLocal()
 
-def activity_orm_to_domain(orm: BaseActivityORM | None)->BaseActivity:
+def activity_orm_to_domain(orm: BaseActivityORM )->BaseActivity:
     from src.models.services.status import attribute_orm_to_domain
     
-    attributes:Any = []
-    if orm is None:
-        return None # type: ignore
+    attributes:list["Attribute"] = []
+    compound_activities:list["CompoundActivity"]= []
     for association in orm.attributes:
         temp_domain=attribute_orm_to_domain(association.attribute)    # handle by creating a new function in a different file?
         temp_domain.load=association.load
         attributes.append(temp_domain)
-    domain:BaseActivity = BaseActivity(orm.name, orm.xp, attributes)
+    for association in orm.compound_activities:
+        temp_domain=compound_activity_orm_to_domain(association.compound_activity)    # handle by creating a new function in a different file?
+        temp_domain.load=association.load
+        compound_activities.append(temp_domain)
+    domain:BaseActivity = BaseActivity(orm.name, orm.xp, attributes=attributes)
     domain.id=orm.id
     domain.activity_type=orm.activity_type
+    domain.compound_activities=compound_activities
     return domain
 
 def activity_domain_to_orm(domain: BaseActivity) -> BaseActivityORM:
@@ -32,24 +41,29 @@ def create_activity_orm(domain: BaseActivity) -> BaseActivityORM:
     orm = BaseActivityORM(name=domain.name, xp=domain.xp, activity_type="other")
     return orm
 
-def compound_activity_orm_to_domain(orm: CompoundActivityORM | None)->CompoundActivity:
+
+def compound_activity_orm_to_domain(orm: CompoundActivityORM )->CompoundActivity:
     from src.models.services.profession import profession_orm_to_domain
+    from src.models.services.mission import mission_orm_to_domain
     
-    activities:Any = []
-    professions:Any=[]
+    activities:list["BaseActivity"] = []
+    professions:list["Profession"]=[]
+    missions:list["Mission"]=[]
+
     
-    if orm is None:
-        return None # type: ignore
-    for b_act in orm.base_activities:
-        temp_domain=activity_orm_to_domain(b_act.base_activity) 
-        temp_domain.load=b_act.load
+    for association in orm.base_activities:
+        temp_domain=activity_orm_to_domain(association.base_activity) 
+        temp_domain.load=association.load
         activities.append(temp_domain)
-    for prof in orm.professions:
-        temp_domain=profession_orm_to_domain(prof.profession)
-        temp_domain.load=prof.load
+    for association in orm.professions:
+        temp_domain=profession_orm_to_domain(association.profession)
+        temp_domain.load=association.load
         professions.append(temp_domain)
-    
-    domain:CompoundActivity = CompoundActivity(orm.name, orm.xp, activities, professions)
+    for association in orm.missions:
+        temp_domain=mission_orm_to_domain(association.mission)
+        missions.append(temp_domain)
+
+    domain:CompoundActivity = CompoundActivity(orm.name, orm.xp, activities, professions, missions)
     domain.id=orm.id
     return domain
 

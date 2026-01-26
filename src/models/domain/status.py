@@ -1,20 +1,29 @@
-from typing import Any
-class Attributes:
-    def __init__(self, name:str, area:str="", custom:bool=True):
-        self._id=0
-        self._name: str=name
-        self._load: float=0
-        self._area: str=area
-        self._custom: bool=custom
-        self._current_value: float=0
-        self._base_activities: list[Any]=[]
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from src.models.domain.activity import BaseActivity
+class Attribute:
+    def __init__(
+            self,
+            name:str,
+            area:str,
+            custom:bool=True,
+            current_value: float=0,
+            base_activities: list["BaseActivity"] | None = None
+            ):
+        self._id=-1
+        self._load: int=0
+        self._name=name
+        self._area=area
+        self._custom=custom
+        self._current_value= current_value
+        self._base_activities: list["BaseActivity"]=[] if base_activities is None else base_activities
     
     @property
     def base_activities(self):
         return self._base_activities
     
     @base_activities.setter
-    def base_activities(self, new_list:list[Any]):
+    def base_activities(self, new_list:list["BaseActivity"]):
         self._base_activities=new_list
     @property
     def custom(self):
@@ -49,7 +58,7 @@ class Attributes:
     def current_value(self, current_value:int):
         self._current_value=current_value
         
-    
+
     
 # manager class here
     

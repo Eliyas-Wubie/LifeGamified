@@ -1,7 +1,7 @@
 from src.models.domain.activity import BaseActivity, CompoundActivity
-from src.models.domain.profession import Profession # type: ignore
+from src.models.domain.profession import Profession
 from src.models.domain.mission import Mission
-from src.models.domain.status import Attributes
+from src.models.domain.status import Attribute
 from src.models.domain.accomplishment import Accomplishment
 from src.models.domain.titles import Title
 from src.models.state.reward_states import Reward
@@ -9,11 +9,11 @@ from src.utils.config import load_config
 from src.utils.class_factory import ClassFactory
 from src.models.db.models import *
 from src.models.services.activity import create_activity_orm, activity_orm_to_domain, create_compound_activity_orm
-from src.models.services.status import attribute_domain_to_orm, attribute_create_orm_from_domain, attribute_orm_to_domain, create_attribute_orm
+from src.models.services.status import attribute_domain_to_orm, create_attribute_orm, attribute_orm_to_domain, populate_base_activities
 from src.models.services.profession import  create_profession_orm 
 from src.models.services.mission import create_mission_orm
 from src.models.services.accomplishment import create_accomplishment_orm
-from src.models.services.titles import create_title_orm
+from src.models.services.title import create_title_orm
 from typing import Any
 from datetime import datetime
 from sqlalchemy.orm import joinedload
@@ -40,7 +40,7 @@ def test_base_activity_class_factory():
 def test_compound_activity():
     global config, class_list
     base_activities: list[BaseActivity]=[BAclass("create", 1, {}) for BAclass in class_list]
-    my_compound_obj=CompoundActivity( "dance", 112, base_activities, [])
+    my_compound_obj=CompoundActivity( "dance", 112, base_activities, [], [])
     
     assert isinstance(my_compound_obj, CompoundActivity)
     assert my_compound_obj.name=="dance"
@@ -52,10 +52,10 @@ def test_database():
     session = SessionLocal() 
     
 
-    act=BaseActivity("dance", 12, None)
-    attr=Attributes("abc", "mind", True)
+    act=BaseActivity("dance", 12)
+    attr=Attribute("abc", "mind", True)
     
-    attr_orm=attribute_create_orm_from_domain(attr)
+    attr_orm=create_attribute_orm(attr)
     session.add(attr_orm)
     act_orm=create_activity_orm(act)
     session.add(act_orm)
@@ -77,8 +77,8 @@ def test_database():
     print("🌋🌋🌋🌋🌋👌👌",fetched_attribute[-1])
     orm_2: AttributeORM=attribute_domain_to_orm(attr)
     print("🌋🌋🌋🌋🌋👌👌",orm_2, orm_2.name, orm_2.area, orm_2.custom)
-    domain_2: Attributes=attribute_orm_to_domain(fetched_attribute[-1])
-    domain_2=create_attribute_orm(domain_2, fetched_attribute[-1].base_activities)
+    domain_2: Attribute=attribute_orm_to_domain(fetched_attribute[-1])
+    domain_2=populate_base_activities(domain_2, fetched_attribute[-1].base_activities)
     print("🌋🌋🌋🌋🌋👌👌",domain_2, domain_2.name, domain_2.area, domain_2.base_activities)
     
     print("🚩🚩🚩🚩", domain.attributes[0].load)
@@ -87,7 +87,7 @@ def test_database():
     assert isinstance(domain.attributes,list)
     
     new_prof2=Profession("bus_driver", "begineer", None)
-    new_prof=Profession("dirver", "begineer", [new_prof2])
+    new_prof=Profession("dirver", "begineer", sub_professions=[new_prof2])
     prof_orm=create_profession_orm(new_prof)
     session.add(prof_orm)
     session.commit()
@@ -98,14 +98,14 @@ def test_database():
     print("🚀🚀🚀🚀", fetched_profession[-1], fetched_profession[-1].name, fetched_profession[-1].status, fetched_profession[-1].sub_professions )
     assert isinstance(fetched_profession, list)
     
-    base_activity_1=BaseActivity("create", 77, None)
-    base_activity_2=BaseActivity("order", 57, None)
+    base_activity_1=BaseActivity("create", 77)
+    base_activity_2=BaseActivity("order", 57)
     # create the orms
     ba1_orm=create_activity_orm(base_activity_1)
     ba2_orm=create_activity_orm(base_activity_2)
     session.add(ba1_orm)
     session.add(ba2_orm)
-    my_compound_obj=CompoundActivity( "draw", 112, [base_activity_1,base_activity_2], [])
+    my_compound_obj=CompoundActivity( "draw", 112, [base_activity_1,base_activity_2], [], [])
     comp_orm=create_compound_activity_orm(my_compound_obj)
     session.add(comp_orm)
     new_prof3=Profession("artist","advanced", None)
@@ -113,8 +113,8 @@ def test_database():
     session.add(prof3_orm)
     session.flush()
     # creating relation orms
-    ba1_comp_orm=CompoundActivityBaseActivityORM(compound_activity_id=comp_orm.id, base_activity_id=ba1_orm.id, load=5)
-    ba2_comp_orm=CompoundActivityBaseActivityORM(compound_activity_id=comp_orm.id, base_activity_id=ba2_orm.id, load=8)
+    ba1_comp_orm=BaseActivityCompoundActivityORM(compound_activity_id=comp_orm.id, base_activity_id=ba1_orm.id, load=5)
+    ba2_comp_orm=BaseActivityCompoundActivityORM(compound_activity_id=comp_orm.id, base_activity_id=ba2_orm.id, load=8)
     
     session.add(ba1_comp_orm)
     session.add(ba2_comp_orm)
@@ -130,15 +130,14 @@ def test_database():
     assert isinstance(fetched_profession2, list)
     
     #next handle mission and connect it back to profession
-    mission1=Mission("run", [my_compound_obj],datetime.now(),{"brave":10, "solid":6})
+    mission1=Mission("run","descrippppption", datetime.now(), {"brave":10, "solid":6},[my_compound_obj],[],[])
     mission1_orm=create_mission_orm(mission1)
     session.add(mission1_orm)
     session.flush()
     
-    mission1_comp_orm=MissionCompoundActivityORM(
+    mission1_comp_orm=CompoundActivityMissionORM(
         mission_id=mission1_orm.id,
         compound_activity_id=comp_orm.id,
-        load=5
         )
     session.add(mission1_comp_orm)
     
@@ -162,7 +161,7 @@ def test_database():
     assert isinstance(fetched_mission2, list)
     
     # Accomplishment
-    ac1=Accomplishment("win", 3, [], [], [])
+    ac1=Accomplishment("win", 3, [], [], [], [])
     ac1_orm=create_accomplishment_orm(ac1)
     
     session.add(ac1_orm)

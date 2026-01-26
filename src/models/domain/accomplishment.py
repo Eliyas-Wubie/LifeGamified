@@ -1,14 +1,37 @@
-from typing import Any
+from typing import  TYPE_CHECKING
+if TYPE_CHECKING:
+    from src.models.domain.status import Attribute
+    from src.models.domain.profession import Profession
+    from src.models.domain.titles import Title
+    from src.models.domain.mission import Mission
+    
 class Accomplishment:
-    def __init__(self, name: str, difficulty: int, attributes:list[Any], professions:list[Any],titles:list[Any]):
+    def __init__(
+            self, 
+            name: str, 
+            difficulty: int, 
+            attributes:list["Attribute"] | None = None,    
+            professions:list["Profession"] | None = None,
+            titles:list["Title"] | None = None, 
+            missions:list["Mission"] | None = None
+        ):
+        self._id: int=-1
+        self._load: int=0
         self._name=name
         self._difficulty=difficulty
-        self._attributes=attributes
-        self._professions=professions
-        self._titles=titles
-        # we need a mission link too
-        self._id=0
+        self._attributes= [] if attributes is None else attributes
+        self._professions= [] if professions is None else professions
+        self._titles= [] if titles is None else titles
+        self._missions= [] if missions is None else missions
+
+    @property
+    def load(self):
+        return self._load
     
+    @load.setter
+    def load(self, new_load:int):
+        self._load = new_load
+
     @property
     def id(self):
         return self._id
