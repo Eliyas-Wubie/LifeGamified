@@ -1,6 +1,7 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 if TYPE_CHECKING:
     from src.models.domain.activity import BaseActivity
+
 class Attribute:
     def __init__(
             self,
@@ -58,7 +59,11 @@ class Attribute:
     def current_value(self, current_value:int):
         self._current_value=current_value
         
+class Status: # singleton
+    def __init__(self, xp:float=0, level:int=0, attributes:list[Any] | None = None, titles:list[Any] | None = None) -> None:
+        self._xp=xp
+        self._level=level
+        self._attributes=attributes
+        self._titles=titles
 
-    
-# manager class here
     

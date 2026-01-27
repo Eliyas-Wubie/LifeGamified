@@ -10,6 +10,7 @@ class Profession:
             self,
             name:str,
             status:str,
+            points:float| None = None,
             parent: "Profession | None" = None,
             sub_professions: list["Profession"] | None=None,
             compound_activities: list["CompoundActivity"] | None=None,
@@ -19,11 +20,20 @@ class Profession:
         self._id: int = -1
         self._name = name
         self._status = status
+        # we need to track profession points here
+        self._points = 0 if points is None else points
         self._parent = parent
         self._sub_profession = [] if sub_professions is None else sub_professions
         self._compound_activities = [] if compound_activities is None else compound_activities
         self._missions = [] if missions is None else missions
         self._accomplishments = [] if accomplishments is None else accomplishments
+    @property
+    def points(self):
+        return self._points
+
+    @points.setter
+    def points(self, new_points:int):
+        self._points=new_points   
 
     @property
     def id(self):
@@ -86,10 +96,8 @@ class Profession:
     def add_sub_profession(self, prof:"Profession"):
         self._sub_profession.append(prof)
 
-    
-    
-
-class ProfessionManager:
-    def __init__(self):
+    def rank_update_check(self): # checks child status and updates self status
         pass
-    
+
+
+# handle cascading logic - can only perform action on this domain model - thus it should be a service

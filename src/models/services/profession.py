@@ -34,7 +34,7 @@ def profession_orm_to_domain(orm: ProfessionORM) -> Profession:
         temp_domain.load=association.load
         accomplishments.append(temp_domain)
      
-    domain = Profession(orm.name, orm.status)
+    domain = Profession(orm.name, orm.status, orm.points)
     for sub in orm.sub_professions:
         domain.add_sub_profession(profession_orm_to_domain(sub))
     domain.parent=None if orm.parent is None else profession_orm_to_domain(orm.parent)
@@ -63,6 +63,7 @@ def create_profession_orm(
     orm = ProfessionORM(
         name=domain.name,
         status=domain.status,
+        points=domain.points
     )
     cache[key] = orm
 

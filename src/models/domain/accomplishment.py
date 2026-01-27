@@ -18,6 +18,8 @@ class Accomplishment:
         self._id: int=-1
         self._load: int=0
         self._name=name
+        # add description
+        # add unlocked state
         self._difficulty=difficulty
         self._attributes= [] if attributes is None else attributes
         self._professions= [] if professions is None else professions
@@ -35,20 +37,15 @@ class Accomplishment:
     @property
     def id(self):
         return self._id
-    
     @id.setter
     def id(self, new_id:int):
         self._id = new_id
-
     @property
     def professions(self):
-        return self._professions
-    
+        return self._professions 
     @professions.setter
     def professions(self, new_professions:int):
         self._professions = new_professions
-        
-    
     @property
     def name(self):
         return self._name
@@ -62,7 +59,4 @@ class Accomplishment:
     def titles(self):
         return self._titles
 
-
-class AccomplishmentManager:
-    def __init__(self):
-        pass
+# accomplished is done on ORM so service should handle it manager not needed

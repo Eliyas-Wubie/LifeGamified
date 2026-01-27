@@ -66,7 +66,7 @@ class ProfessionORM(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String, nullable=False, unique=True)
     status: Mapped[str] = mapped_column(String, nullable=False)
-
+    points: Mapped[float] = mapped_column(Float, nullable=False)
     parent_id: Mapped[int | None] = mapped_column(ForeignKey("professions.id"))
 
     sub_professions: Mapped[list["ProfessionORM"]] = relationship(

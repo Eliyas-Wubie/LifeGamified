@@ -87,7 +87,7 @@ def test_database():
     assert domain.xp == 12
     assert isinstance(domain.attributes,list)
     
-    new_prof2=Profession("bus_driver", "begineer", None)
+    new_prof2=Profession("bus_driver", "begineer")
     new_prof=Profession("dirver", "begineer", sub_professions=[new_prof2])
     prof_orm=create_profession_orm(new_prof)
     session.add(prof_orm)
@@ -109,7 +109,7 @@ def test_database():
     my_compound_obj=CompoundActivity( "draw", 112, [base_activity_1,base_activity_2], [], [])
     comp_orm=create_compound_activity_orm(my_compound_obj)
     session.add(comp_orm)
-    new_prof3=Profession("artist","advanced", None)
+    new_prof3=Profession("artist","advanced")
     prof3_orm=create_profession_orm(new_prof3)
     session.add(prof3_orm)
     session.flush()
@@ -131,7 +131,7 @@ def test_database():
     assert isinstance(fetched_profession2, list)
     
     #next handle mission and connect it back to profession
-    mission1=Mission("run","descrippppption", datetime.now(), {"brave":10, "solid":6},[my_compound_obj],[],[])
+    mission1=Mission("run","descrippppption", datetime.now(), [{"name":"bravery", "type":"xp", "value":11}],[my_compound_obj],[],[])
     mission1_orm=create_mission_orm(mission1)
     session.add(mission1_orm)
     session.flush()
@@ -203,7 +203,7 @@ def test_database():
     
     
     
-    assert isinstance(fetched_ac1, str)
+    assert isinstance(fetched_ac1, list)
     
     ac1_prof_orm=AccomplishmentProfessionORM(accomplishment_id=ac1_orm.id, profession_id=prof3_orm.id, load=6)
     session.add(ac1_prof_orm)

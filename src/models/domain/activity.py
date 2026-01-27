@@ -1,6 +1,5 @@
 
 from src.models.state.reward_states import Reward
-from src.utils.converters import orm_to_name_value
 from typing import Any
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
@@ -73,8 +72,7 @@ class BaseActivity:
         return self._attributes
     
     def perform(self):
-        reward=Reward(xp=self.xp, ap=[], pp=[])
-        reward.save_attributes(self.attributes)
+        reward=Reward(xp=self.xp, ap=self._attributes, pp=[])
         return reward
 
 class CompoundActivity:
@@ -97,39 +95,29 @@ class CompoundActivity:
     @property
     def load(self):
         return self._load
-    
     @load.setter
     def load(self, load:int):
         self._load=load
-        
     @property
     def id(self):
         return self._id
-    
     @id.setter
     def id(self, id:int):
         self._id=id
-    
     @property
     def name(self):
         return self._name
-    
     @property
     def xp(self):
         return self._xp
-
     @property
     def activities(self):
         return self._activities
-    
     @property
     def professions(self):
         return self._professions
-    
     def perform(self):
-        # calculate XP, AP, PP and return
-        reward=Reward(xp=self.xp, ap=[], pp=[])
-        reward.save_professions(orm_to_name_value(self.professions))
+        reward=Reward(xp=self.xp, ap=[], pp=self._professions)
         reward.extend_rewards([activity.perform() for activity in self.activities])
         return reward
   
@@ -144,21 +132,33 @@ class ActivityManager:
     def perform_activity(self, compound_activity: CompoundActivity):
         act_reward: Reward=compound_activity.perform()
 
-        result:dict[str,float|dict[str,float]]={}
+        result:dict[str,Any]={}
         result["xp"]=act_reward.xp
-        result["ap"]=act_reward.ap
-        result["pp"]=act_reward.pp
         
+        result["ap"]={}
+        for ap in act_reward.ap:
+            result.get("ap",{})[ap.name]=result.get("ap",{}).get(ap.name,0)+ap.load
+            
+        result["pp"]={}
+        for pp in act_reward.pp:
+            result.get("pp",{})[pp.name]=result.get("pp",{}).get(pp.name,0)+pp.load
+            
         return result
         
     def perform_activity_group(self, compound_activities: list[CompoundActivity]):
-        collection:list[dict[str,float]]=[]
+        result: dict[str,Any]={}
+        result["xp"]=0
+        result["ap"] = {}
+        result["pp"] = {}
         for compound_activity in compound_activities:
             act_reward: Reward=compound_activity.perform()
-            result:dict[str,float]={}
-            result["xp"]=act_reward.xp
-            result["ap"]=act_reward.ap
-            result["pp"]=act_reward.pp
-            collection.append(result)
+
+            result["xp"] = result.get("xp",0)+act_reward.xp
+            for ap in act_reward.ap:
+                result.get("ap",{})[ap.name]=result.get("ap",{}).get(ap.name,0)+ap.load
+        
+            for pp in act_reward.pp:
+                result.get("pp",{})[pp.name]=result.get("pp",{}).get(pp.name,0)+pp.load
+                
             del act_reward
-        return collection
+        return result
