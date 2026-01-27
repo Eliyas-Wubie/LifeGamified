@@ -63,7 +63,7 @@ def compound_activity_orm_to_domain(orm: CompoundActivityORM )->CompoundActivity
         temp_domain=mission_orm_to_domain(association.mission)
         missions.append(temp_domain)
 
-    domain:CompoundActivity = CompoundActivity(orm.name, orm.xp, activities, professions, missions)
+    domain:CompoundActivity = CompoundActivity(orm.name, orm.xp, orm.tags, activities, professions, missions)
     domain.id=orm.id
     return domain
 

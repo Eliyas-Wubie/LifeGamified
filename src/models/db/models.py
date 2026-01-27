@@ -1,4 +1,5 @@
 from sqlalchemy import String, Integer, JSON, ForeignKey, DATETIME, Boolean, CheckConstraint, Float
+from sqlalchemy.ext.mutable import MutableList
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from src.models.db.base import Base
 from typing import Any
@@ -27,6 +28,7 @@ class CompoundActivityORM(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String, nullable=False, unique=True)
     xp: Mapped[float] = mapped_column(Float, nullable=False)
+    tags: Mapped[list[str]] = mapped_column(MutableList.as_mutable(JSON),default=list,)
     base_activities: Mapped[list["BaseActivityCompoundActivityORM"]] = relationship(
         back_populates="compound_activity",
         cascade="all, delete-orphan"
@@ -138,6 +140,23 @@ class AttributeORM(Base):
         back_populates="attribute"
     )
 
+class DailyReportORM(Base):
+    __tablename__ = "daily_reports"
+    
+    id:Mapped[int] = mapped_column(primary_key=True)
+    date:Mapped[DATETIME]=mapped_column(DATETIME, nullable=False)
+    compound_activities:Mapped[list["DailyReportCompoundActivityORM"]]=relationship(back_populates="daily_report")
+    missions:Mapped[list["DailyReportMissionORM"]]=relationship(back_populates="daily_report")
+
+class StatusORM(Base):
+    __tablename__ = "status"
+    
+    id:Mapped[int] = mapped_column(primary_key=True)
+    xp:Mapped[float] =  mapped_column(Float, nullable=False)
+    level:Mapped[int] = mapped_column(Integer, nullable=False)
+    attributes:Mapped[list["StatusAttributeORM"]]=relationship(back_populates="status")
+    titles:Mapped[list["StatusTitleORM"]]=relationship(back_populates="status")
+  
 
 # ASSOCIATIONS
 
@@ -336,3 +355,67 @@ class AccomplishmentProfessionORM(Base):
     profession:Mapped["ProfessionORM"]=relationship(
         back_populates="accomplishments"
         )
+
+class DailyReportCompoundActivityORM(Base):
+    __tablename__ = "daily_reports_compound_activities"
+    
+    daily_report_id:Mapped[int]=mapped_column(
+        ForeignKey("daily_reports.id"),
+        primary_key=True
+        )
+    compound_activity_id:Mapped[int]=mapped_column(
+        ForeignKey("compound_activities.id"),
+        primary_key=True
+        )
+    daily_report:Mapped["DailyReportORM"]=relationship(
+        back_populates="compound_activities"
+        )
+    compound_activity:Mapped["CompoundActivityORM"]=relationship()
+    
+class DailyReportMissionORM(Base):
+    __tablename__ = "daily_reports_missions"
+    
+    daily_report_id:Mapped[int]=mapped_column(
+        ForeignKey("daily_reports.id"),
+        primary_key=True
+        )
+    missions_id:Mapped[int]=mapped_column(
+        ForeignKey("missions.id"),
+        primary_key=True
+        )
+    daily_report:Mapped["DailyReportORM"]=relationship(
+        back_populates="missions"
+        )
+    mission:Mapped["MissionORM"]=relationship()
+
+class StatusAttributeORM(Base):
+    __tablename__ = "status_attributes"
+    
+    status_id:Mapped[int]=mapped_column(
+        ForeignKey("status.id"),
+        primary_key=True
+        )
+    attribute_id:Mapped[int]=mapped_column(
+        ForeignKey("attributes.id"),
+        primary_key=True
+        )
+    status:Mapped["StatusORM"]=relationship(
+        back_populates="attributes"
+        )
+    attribute:Mapped["AttributeORM"]=relationship()
+    
+class StatusTitleORM(Base):
+    __tablename__ = "status_titles"
+    
+    status_id:Mapped[int]=mapped_column(
+        ForeignKey("status.id"),
+        primary_key=True
+        )
+    title_id:Mapped[int]=mapped_column(
+        ForeignKey("titles.id"),
+        primary_key=True
+        )
+    status:Mapped["StatusORM"]=relationship(
+        back_populates="titles"
+        )
+    title:Mapped["TitleORM"]=relationship()

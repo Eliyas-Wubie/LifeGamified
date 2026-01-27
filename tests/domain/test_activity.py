@@ -8,8 +8,8 @@ def test_perform_activity():
     base_activity_2=BaseActivity("craft", 6.7, "sync")
     profession_1 = Profession("Artist", "beginner")
     profession_1.load = 40
-    compound_activity=CompoundActivity("sculpt", 40, [base_activity_1, base_activity_2],[profession_1])
-    compound_activity2=CompoundActivity("chizzel", 30, [base_activity_1],[profession_1])
+    compound_activity=CompoundActivity("sculpt", 40, [],[base_activity_1, base_activity_2],[profession_1])
+    compound_activity2=CompoundActivity("chizzel", 30, [],[base_activity_1],[profession_1])
     
     activity_manager=ActivityManager()
     reward = activity_manager.perform_activity(compound_activity)

@@ -41,7 +41,7 @@ def test_base_activity_class_factory():
 def test_compound_activity():
     global config, class_list
     base_activities: list[BaseActivity]=[BAclass("create", 1, {}) for BAclass in class_list]
-    my_compound_obj=CompoundActivity( "dance", 112, base_activities, [], [])
+    my_compound_obj=CompoundActivity( "dance", 112, [], base_activities, [], [])
     
     assert isinstance(my_compound_obj, CompoundActivity)
     assert my_compound_obj.name=="dance"
@@ -106,7 +106,7 @@ def test_database():
     ba2_orm=create_activity_orm(base_activity_2)
     session.add(ba1_orm)
     session.add(ba2_orm)
-    my_compound_obj=CompoundActivity( "draw", 112, [base_activity_1,base_activity_2], [], [])
+    my_compound_obj=CompoundActivity( "draw", 112, ["daily"],[base_activity_1,base_activity_2], [], [])
     comp_orm=create_compound_activity_orm(my_compound_obj)
     session.add(comp_orm)
     new_prof3=Profession("artist","advanced")

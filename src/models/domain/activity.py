@@ -80,6 +80,7 @@ class CompoundActivity:
             self, 
             name: str, 
             xp:float, 
+            tags:list[str] | None =None,
             activities:list["BaseActivity"] | None = None, 
             professions: list["Profession"] | None = None, 
             missions: list["Mission"] | None = None
@@ -88,9 +89,16 @@ class CompoundActivity:
         self._load: int = 0
         self._name = name
         self._xp = xp
+        self._tags = [] if tags is None else tags
         self._activities=[] if activities is None else activities
         self._professions=[] if professions is None else professions
         self._missions= [] if missions is None else missions
+    @property
+    def tags(self):
+        return self._tags
+    @tags.setter
+    def tags(self, tags:int):
+        self._tags=tags
         
     @property
     def load(self):
