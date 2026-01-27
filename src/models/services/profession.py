@@ -10,6 +10,7 @@ if TYPE_CHECKING:
 session = SessionLocal()
 
 def profession_orm_to_domain(orm: ProfessionORM) -> Profession:
+    # can we check cache here too
     from src.models.services.activity import compound_activity_orm_to_domain
     from src.models.services.mission import mission_orm_to_domain
     from src.models.services.accomplishment import accomplishment_orm_to_domain
@@ -45,6 +46,7 @@ def profession_orm_to_domain(orm: ProfessionORM) -> Profession:
     return domain
 
 def profession_domain_to_orm(domain: Profession) -> ProfessionORM:
+    # check cache
     prof:Any = session.query(ProfessionORM).filter(ProfessionORM.name == domain.name).first()
     return prof
 def create_profession_orm(

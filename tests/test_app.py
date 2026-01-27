@@ -14,6 +14,7 @@ from src.models.services.profession import  create_profession_orm
 from src.models.services.mission import create_mission_orm
 from src.models.services.accomplishment import create_accomplishment_orm
 from src.models.services.title import create_title_orm
+from src.models.state.accomplishment import AccomplishmentCache
 from typing import Any
 from datetime import datetime
 from sqlalchemy.orm import joinedload
@@ -161,8 +162,10 @@ def test_database():
     assert isinstance(fetched_mission2, list)
     
     # Accomplishment
+    a_cache=AccomplishmentCache()
     ac1=Accomplishment("win", 3, [], [], [], [])
     ac1_orm=create_accomplishment_orm(ac1)
+    a_cache.add_to_cache(ac1, ac1_orm)
     
     session.add(ac1_orm)
     session.flush()
@@ -173,7 +176,34 @@ def test_database():
         joinedload(AccomplishmentORM.attributes)
         ).filter(AccomplishmentORM.name=="win").all()
     print("🎶🎶🎶🎶", fetched_ac1[-1], fetched_ac1[-1].name, fetched_ac1[-1].difficulty, fetched_ac1[-1].attributes[0].attribute.name )
-    assert isinstance(fetched_ac1, list)
+    print("🚒🚒🚒", a_cache.query_domain_cache(ac1)==ac1)
+    print("🚒🚒🚒", a_cache.query_orm_cache(ac1_orm)==ac1_orm)
+    print("🚒🚒🚒", a_cache.query_inverse_cache(ac1_orm)==ac1)
+    print("🚒🚒🚒", a_cache.query_inverse_cache(ac1)==ac1_orm)
+    print("🚒🚒🚒", a_cache.query_inverse_cache(ac1)==ac1)
+    ac_test1=Accomplishment("win", 3, [], [], [], [])
+    ac_test2=Accomplishment("win", 3, [], [], [], [])
+    
+    a_cache.add_to_cache(ac_test1)
+    a_cache.add_to_cache(ac_test2, ac1_orm)
+    ac_test3=ac_test1
+    print("🚒🚒🚒2", a_cache.query_domain_cache(ac_test1)==ac1)
+    print("🚒🚒🚒2", a_cache.query_domain_cache(ac_test2)==ac1)
+    print("🚒🚒🚒2", a_cache.query_domain_cache(ac_test2)==ac_test1)
+    print("🚒🚒🚒2", a_cache.query_inverse_cache(ac_test2)==a_cache.query_inverse_cache(ac1)) # means duplicate orm already exists, should this be allowed?
+    print("🚒🚒🚒2", a_cache.query_domain_cache(ac_test1)==ac_test3)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    assert isinstance(fetched_ac1, str)
     
     ac1_prof_orm=AccomplishmentProfessionORM(accomplishment_id=ac1_orm.id, profession_id=prof3_orm.id, load=6)
     session.add(ac1_prof_orm)
