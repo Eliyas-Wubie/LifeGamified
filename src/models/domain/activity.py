@@ -20,7 +20,7 @@ class BaseActivity:
         self._load: int = 0
         self._name = name
         self._xp = xp
-        self._activity_type = activity_type
+        self._activity_type = activity_type # name and type are usually the same except when it is other
         self._attributes= [] if attributes is None else attributes
         self._compound_activities = [] if compound_activities is None else compound_activities
 
@@ -67,9 +67,21 @@ class BaseActivity:
     def xp(self):
         return self._xp
     
+    @name.setter
+    def name(self, new_name:str):
+        self._name = new_name
+
+    @xp.setter
+    def xp(self, new_xp:float):
+        self._xp =new_xp
+    
     @property
     def attributes(self):
         return self._attributes
+
+    @attributes.setter
+    def attributes(self, new_attributes:list["Attribute"]):
+        self._attributes = new_attributes
     
     def perform(self):
         reward=Reward(xp=self.xp, ap=self._attributes, pp=[])
@@ -97,7 +109,7 @@ class CompoundActivity:
     def tags(self):
         return self._tags
     @tags.setter
-    def tags(self, tags:int):
+    def tags(self, tags:list[str]):
         self._tags=tags
         
     @property
@@ -112,18 +124,42 @@ class CompoundActivity:
     @id.setter
     def id(self, id:int):
         self._id=id
+        
+    @property
+    def missions(self):
+        return self._missions
+    @missions.setter
+    def missions(self, missions:list["Mission"]):
+        self._missions=missions
+        
     @property
     def name(self):
         return self._name
     @property
     def xp(self):
         return self._xp
+    
+    @name.setter
+    def name(self, new_name:str):
+        self._name = new_name
+    @xp.setter
+    def xp(self, new_xp:float):
+        self._xp = new_xp
+    
     @property
     def activities(self):
         return self._activities
+    @activities.setter
+    def activities(self, new_activities: list["BaseActivity"]):
+        self._activities = new_activities
+    
     @property
     def professions(self):
         return self._professions
+    @professions.setter
+    def professions(self, new_professions:list["Profession"]):
+        self._professions = new_professions
+
     def perform(self):
         reward=Reward(xp=self.xp, ap=[], pp=self._professions)
         reward.extend_rewards([activity.perform() for activity in self.activities])

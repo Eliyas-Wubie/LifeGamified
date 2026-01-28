@@ -2,7 +2,9 @@ from src.models.db.models import TitleORM
 from src.models.domain.titles import Title
 from typing import Any
 from src.models.db.session import SessionLocal
-    
+
+# view, search and filter owned and unowned titles
+
 session = SessionLocal()
 
 def title_orm_to_domain(orm: TitleORM )->Title:

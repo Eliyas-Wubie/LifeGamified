@@ -1,8 +1,9 @@
-from sqlalchemy import String, Integer, JSON, ForeignKey, DATETIME, Boolean, CheckConstraint, Float
+from sqlalchemy import String, Integer, JSON, ForeignKey, DateTime, Boolean, CheckConstraint, Float
 from sqlalchemy.ext.mutable import MutableList
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from src.models.db.base import Base
 from typing import Any
+from datetime import datetime
 
 
 # Main Tables
@@ -47,8 +48,8 @@ class MissionORM(Base):
     id:Mapped[int]=mapped_column(primary_key=True)
     name: Mapped[str]=mapped_column(String, nullable=False)
     description: Mapped[str]=mapped_column(String, nullable=True)
-    deadline: Mapped[DATETIME]=mapped_column(DATETIME, nullable=True)
-    bonus:Mapped[dict[str,Any]]=mapped_column(JSON, nullable=True)
+    deadline: Mapped[datetime]=mapped_column(DateTime, nullable=True)
+    bonus:Mapped[list[dict[str,Any]]]=mapped_column(MutableList.as_mutable(JSON), nullable=True)
     
     compound_activities:Mapped[list["CompoundActivityMissionORM"]]=relationship(
         back_populates="mission"
@@ -100,7 +101,8 @@ class AccomplishmentORM(Base):
     id:Mapped[int]=mapped_column(Integer, primary_key=True)
     name:Mapped[str]=mapped_column(String, nullable=False)
     difficulty:Mapped[int]=mapped_column(Integer, nullable=False)
-    
+    description:Mapped[str] = mapped_column(String, nullable=False)
+    status:Mapped[str] = mapped_column(String, nullable=False, default="locked")
     titles:Mapped[list["AccomplishmentTitleORM"]]=relationship(
         back_populates="accomplishment",
         cascade="all, delete-orphan"
@@ -144,7 +146,7 @@ class DailyReportORM(Base):
     __tablename__ = "daily_reports"
     
     id:Mapped[int] = mapped_column(primary_key=True)
-    date:Mapped[DATETIME]=mapped_column(DATETIME, nullable=False)
+    date:Mapped[datetime]=mapped_column(DateTime, nullable=False)
     compound_activities:Mapped[list["DailyReportCompoundActivityORM"]]=relationship(back_populates="daily_report")
     missions:Mapped[list["DailyReportMissionORM"]]=relationship(back_populates="daily_report")
 

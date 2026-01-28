@@ -7,6 +7,9 @@ from src.models.db.session import SessionLocal
 if TYPE_CHECKING:
     from src.models.db.models import BaseActivityAttributeORM
     
+# view attributes
+# update attributes
+
 session = SessionLocal()
 
 def attribute_orm_to_domain(orm: AttributeORM)->Attribute:

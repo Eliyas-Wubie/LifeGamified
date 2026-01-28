@@ -37,8 +37,16 @@ class Mission:
         return self._description
     
     @description.setter
-    def description(self, description:int):
+    def description(self, description:str | None):
         self._description=description
+        
+    @property
+    def professions(self):
+        return self._professions
+    
+    @professions.setter
+    def professions(self, professions:list["Profession"]):
+        self._professions=professions
 
     @property
     def id(self):
@@ -55,22 +63,46 @@ class Mission:
     @load.setter
     def load(self, new_load:int):
         self._load=new_load
+
+    @property
+    def accomplishments(self):
+        return self._accomplishments
+    
+    @accomplishments.setter
+    def accomplishments(self, new_accomplishments:list["Accomplishment"]):
+        self._accomplishments=new_accomplishments
         
     @property
     def name(self):
         return self._name
+
+    @name.setter
+    def name(self, new_name:str):
+        self._name = new_name
     
     @property
     def compound_activities(self):
         return self._compound_activities
+
+    @compound_activities.setter
+    def compound_activities(self, new_compound_activities:list["CompoundActivity"]):
+        self._compound_activities = new_compound_activities
     
     @property
     def deadline(self):
         return self._deadline
-    
+
+    @deadline.setter
+    def deadline(self, new_deadline:datetime | None):
+        self._deadline = new_deadline
+
     @property
     def bonus(self):
         return self._bonus
+
+    @bonus.setter
+    def bonus(self, new_bonus: list[dict[str, Any]]):
+        self._bonus = new_bonus
     
     def execute(self):
         reward = Reward()

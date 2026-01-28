@@ -7,6 +7,14 @@ if TYPE_CHECKING:
     from src.models.domain.activity import CompoundActivity
     from src.models.domain.mission import Mission
     from src.models.domain.accomplishment import Accomplishment
+    
+# view profession tree
+# register profession tree
+# edit profession tree
+# delete profession tree
+# link profession
+# update profession    
+
 session = SessionLocal()
 
 def profession_orm_to_domain(orm: ProfessionORM) -> Profession:
