@@ -86,10 +86,12 @@ class ProfessionORM(Base):
         back_populates="profession",
         cascade="all, delete-orphan"
     )
+    
     missions: Mapped[list["MissionProfessionORM"]] = relationship(
         back_populates="profession",
         cascade="all, delete-orphan"
     )
+    
     accomplishments:Mapped[list["AccomplishmentProfessionORM"]]=relationship(
         back_populates="profession"
     )
@@ -122,6 +124,7 @@ class TitleORM(Base):
     id: Mapped[int]=mapped_column(Integer, primary_key=True)
     name: Mapped[str]=mapped_column(Integer, nullable=False, unique=True)
     description: Mapped[str]=mapped_column(String, nullable=True)
+    status:Mapped[str] = mapped_column(String, nullable=False, default="locked")
     accomplishments:Mapped[list["AccomplishmentTitleORM"]]=relationship(
         back_populates="title",
         cascade="all, delete-orphan"
@@ -134,7 +137,7 @@ class AttributeORM(Base):
     name: Mapped[str]=mapped_column(String, nullable=False, unique=True)
     area:Mapped[str]=mapped_column(String, nullable=False)
     custom:Mapped[bool]=mapped_column(Boolean, nullable=False)
-    current_value:Mapped[int]=mapped_column(Boolean, nullable=False)
+    current_value:Mapped[float]=mapped_column(Float, nullable=False)
     base_activities:Mapped[list["BaseActivityAttributeORM"]]=relationship(
         back_populates="attribute"
     )
@@ -152,6 +155,12 @@ class DailyReportORM(Base):
 
 class StatusORM(Base):
     __tablename__ = "status"
+    _instance = None
+    
+    def __new__(cls, *args: Any, **kwargs:Any): # but this dose not work on persistent instance i.e only one row
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance        
     
     id:Mapped[int] = mapped_column(primary_key=True)
     xp:Mapped[float] =  mapped_column(Float, nullable=False)
@@ -169,7 +178,7 @@ class BaseActivityAttributeORM(Base):
         ForeignKey("base_activities.id"), 
         primary_key=True
         )
-    attributes_id: Mapped[int] = mapped_column(
+    attribute_id: Mapped[int] = mapped_column(
         ForeignKey("attributes.id"), 
         primary_key=True
         )
@@ -381,7 +390,7 @@ class DailyReportMissionORM(Base):
         ForeignKey("daily_reports.id"),
         primary_key=True
         )
-    missions_id:Mapped[int]=mapped_column(
+    mission_id:Mapped[int]=mapped_column(
         ForeignKey("missions.id"),
         primary_key=True
         )

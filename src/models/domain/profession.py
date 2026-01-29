@@ -9,7 +9,7 @@ class Profession:
     def __init__(
             self,
             name:str,
-            status:str,
+            status:str | None,
             points:float| None = None,
             parent: "Profession | None" = None,
             sub_professions: list["Profession"] | None=None,
@@ -17,6 +17,10 @@ class Profession:
             missions: list["Mission"] | None=None,
             accomplishments: list["Accomplishment"] | None=None,
             ):
+        profession_policy=ProfessionPolicy()
+        if profession_policy.is_valid_status("locked" if status is None else status):
+            raise ValueError("invalid difficulty or status")
+        del profession_policy
         self._id: int = -1
         self._name = name
         self._status = status
@@ -32,7 +36,7 @@ class Profession:
         return self._points
 
     @points.setter
-    def points(self, new_points:int):
+    def points(self, new_points:float):
         self._points=new_points   
 
     @property
@@ -93,11 +97,29 @@ class Profession:
     def sub_professions(self):
         return self._sub_profession
 
+    @name.setter
+    def name(self, new_name:str):
+        self._name = new_name
+    
+    @status.setter
+    def status(self, new_status:str):
+        self._status = new_status
+    
+    @sub_professions.setter
+    def sub_professions(self, new_sub_professions: list["Profession"]):
+        self._sub_profession = new_sub_professions
+
     def add_sub_profession(self, prof:"Profession"):
         self._sub_profession.append(prof)
 
     def rank_update_check(self): # checks child status and updates self status
         pass
 
+class ProfessionPolicy:
+    def is_valid_status(self, status:str):
+        from src.utils.config import load_config
+        config=load_config()
+        valid_status: list[str]=config.get("valid_status")
+        return status in valid_status
 
 # handle cascading logic - can only perform action on this domain model - thus it should be a service

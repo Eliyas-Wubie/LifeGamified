@@ -72,7 +72,7 @@ def update_mission(
     orm:MissionORM  = mission_domain_to_orm(domain)
     if not orm:
         orm: MissionORM = create_mission_orm(domain)
-        
+        session.add(orm)
     orm.name = new_name if new_name is not None else orm.name 
     domain.name = new_name if new_name is not None else domain.name
     
@@ -89,7 +89,7 @@ def update_mission(
     
     return domain
 
-def control_mission_compound_activity_link(control:str, domain:Mission,compound_activity: CompoundActivity, load:int | None = None):
+def control_mission_compound_activity_link(control:str, domain:Mission,compound_activity: "CompoundActivity", load:int | None = None):
     from src.models.db.models import CompoundActivityMissionORM
     from src.models.services.activity import compound_activity_domain_to_orm
     
@@ -118,7 +118,7 @@ def control_mission_compound_activity_link(control:str, domain:Mission,compound_
     else:
         print("invalid control")
 
-def control_mission_accomplishment_link(control:str, domain:Mission,accomplishment: Accomplishment, load:int | None = None):
+def control_mission_accomplishment_link(control:str, domain:Mission,accomplishment: "Accomplishment", load:int | None = None):
     from src.models.db.models import MissionAccomplishmentORM
     from src.models.services.accomplishment import create_accomplishment_orm
     load = 1 if load is None else load
@@ -146,7 +146,7 @@ def control_mission_accomplishment_link(control:str, domain:Mission,accomplishme
     else:
         print("invalid control")
 
-def control_mission_profession_link(control:str, domain:Mission,profession: Profession, load:int | None = None):
+def control_mission_profession_link(control:str, domain:Mission,profession: "Profession", load:int | None = None):
     from src.models.db.models import MissionProfessionORM
     from src.models.services.profession import profession_domain_to_orm
     load = 1 if load is None else load

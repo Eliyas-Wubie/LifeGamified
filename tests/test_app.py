@@ -63,7 +63,7 @@ def test_database():
     
     session.flush()
     
-    assoc_orm=BaseActivityAttributeORM(base_activity_id=act_orm.id, attributes_id=attr_orm.id, load=9)
+    assoc_orm=BaseActivityAttributeORM(base_activity_id=act_orm.id, attribute_id=attr_orm.id, load=9)
     session.add(assoc_orm)
     session.commit()
     
@@ -163,7 +163,7 @@ def test_database():
     
     # Accomplishment
     a_cache=AccomplishmentCache()
-    ac1=Accomplishment("win", 3, [], [], [], [])
+    ac1=Accomplishment("win", 3, "description")
     ac1_orm=create_accomplishment_orm(ac1)
     a_cache.add_to_cache(ac1, ac1_orm)
     
@@ -181,8 +181,8 @@ def test_database():
     print("🚒🚒🚒", a_cache.query_inverse_cache(ac1_orm)==ac1)
     print("🚒🚒🚒", a_cache.query_inverse_cache(ac1)==ac1_orm)
     print("🚒🚒🚒", a_cache.query_inverse_cache(ac1)==ac1)
-    ac_test1=Accomplishment("win", 3, [], [], [], [])
-    ac_test2=Accomplishment("win", 3, [], [], [], [])
+    ac_test1=Accomplishment("win", 3, "desc")
+    ac_test2=Accomplishment("win", 3, "desc")
     
     a_cache.add_to_cache(ac_test1)
     a_cache.add_to_cache(ac_test2, ac1_orm)

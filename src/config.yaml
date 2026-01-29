@@ -5,5 +5,41 @@ base_activities:
   - deduce
   - learn
   - experience
-  - synced
   - others
+
+valid_tags:
+  - "daily"
+  - "uncomfortable"
+  - "generic"
+
+valid_status:
+  - locked
+  - unlocked
+
+areas:
+  - mind
+  - body
+  - spirit
+
+bonus:
+  - facing fear
+  - endurance
+  - transcendence
+
+punishments:
+  - delay
+  - anti-value
+
+profession_multiplier: 1
+base_activity_multiplier: 1
+compound_activity_multiplier: 1
+mission_multiplier: 1
+accomplishment_multiplier: 1
+attribute_multiplier: 1
+bonus_multiplier: 1
+punishment_multiplier: 1
+load_multiplier: 1
+
+
+
+

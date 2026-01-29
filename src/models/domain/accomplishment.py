@@ -17,6 +17,13 @@ class Accomplishment:
             titles:list["Title"] | None = None, 
             missions:list["Mission"] | None = None
         ):
+        accomplishment_policy=AccomplishmentPolicy()
+        if (
+            accomplishment_policy.is_valid_difficulty(difficulty) or
+            accomplishment_policy.is_valid_status("locked" if status is None else status)
+        ):
+            raise ValueError("invalid difficulty or status")
+        del accomplishment_policy
         self._id: int=-1
         self._load: int=0
         self._name=name
@@ -96,5 +103,14 @@ class Accomplishment:
     @titles.setter
     def titles(self, new_titles:list["Title"]):
         self._titles = new_titles
+
+class AccomplishmentPolicy:
+    def is_valid_status(self, status:str):
+        from src.utils.config import load_config
+        config=load_config()
+        valid_status: list[str]=config.get("valid_status")
+        return status in valid_status
+    def is_valid_difficulty(self, difficulty:int):
+        return difficulty<=10 and difficulty>=1
 
 # accomplished is done on ORM so service should handle it manager not needed

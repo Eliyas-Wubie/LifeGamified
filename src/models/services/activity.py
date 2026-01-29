@@ -70,6 +70,8 @@ def update_basic_activity(
     orm:BaseActivityORM  = activity_domain_to_orm(domain)
     if not orm:
         orm: BaseActivityORM = create_activity_orm(domain)
+        session.add(orm)
+        
     orm.name = new_name if new_name is not None else orm.name # type: ignore
     domain.name = new_name if new_name is not None else domain.name
     
@@ -83,7 +85,7 @@ def update_basic_activity(
     
     return domain
 
-def control_basic_activity_attribute_link(control:str, domain:BaseActivity,attribute: Attribute, load:int | None = None):
+def control_basic_activity_attribute_link(control:str, domain:BaseActivity,attribute: "Attribute", load:int | None = None):
     from src.models.services.status import attribute_domain_to_orm
     from src.models.db.models import BaseActivityAttributeORM
     load = 1 if load is None else load
@@ -101,7 +103,7 @@ def control_basic_activity_attribute_link(control:str, domain:BaseActivity,attri
         attribute_orm=attribute_domain_to_orm(attribute)
         association=session.query(BaseActivityAttributeORM).filter(and_(
             BaseActivityAttributeORM.base_activity_id == accomplishment_orm.id,
-            BaseActivityAttributeORM.attributes_id == attribute_orm.id
+            BaseActivityAttributeORM.attribute_id == attribute_orm.id
         )).first()
         session.delete(association)
         session.commit()
@@ -181,7 +183,7 @@ def update_compound_activity(
     orm:CompoundActivityORM  = compound_activity_domain_to_orm(domain)
     if not orm:
         orm: CompoundActivityORM = create_compound_activity_orm(domain)
-        
+        session.add(orm)
     orm.name = new_name if new_name is not None else orm.name 
     domain.name = new_name if new_name is not None else domain.name
     
@@ -223,7 +225,7 @@ def control_compound_activity_activity_link(control:str, domain:CompoundActivity
     else:
         print("invalid control")
 
-def control_compound_activity_profession_link(control:str, domain:CompoundActivity,profession: Profession, load:int | None = None):
+def control_compound_activity_profession_link(control:str, domain:CompoundActivity,profession: "Profession", load:int | None = None):
     from src.models.db.models import CompoundActivityProfessionORM
     from src.models.services.profession import profession_domain_to_orm
     
@@ -252,7 +254,7 @@ def control_compound_activity_profession_link(control:str, domain:CompoundActivi
     else:
         print("invalid control")
 
-def control_compound_activity_mission_link(control:str, domain:CompoundActivity,mission: Mission, load:int | None = None):
+def control_compound_activity_mission_link(control:str, domain:CompoundActivity,mission: "Mission", load:int | None = None):
     from src.models.db.models import CompoundActivityMissionORM
     from src.models.services.mission import mission_domain_to_orm
     

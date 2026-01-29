@@ -16,6 +16,10 @@ class BaseActivity:
             attributes:list["Attribute"] | None = None,
             compound_activities: list["CompoundActivity"] | None = None
             ): 
+        base_activity_policy=ActivityPolicy()
+        if base_activity_policy.is_valid_activity_type(activity_type):
+            raise ValueError("invalid activity type")
+        del base_activity_policy
         self._id: int = -1
         self._load: int = 0
         self._name = name
@@ -97,6 +101,10 @@ class CompoundActivity:
             professions: list["Profession"] | None = None, 
             missions: list["Mission"] | None = None
         ):
+        compound_activity_policy=ActivityPolicy()
+        if compound_activity_policy.is_valid_tag([] if tags is None else tags):
+            raise ValueError("invalid tag")
+        del compound_activity_policy
         self._id: int = -1
         self._load: int = 0
         self._name = name
@@ -164,7 +172,23 @@ class CompoundActivity:
         reward=Reward(xp=self.xp, ap=[], pp=self._professions)
         reward.extend_rewards([activity.perform() for activity in self.activities])
         return reward
-  
+
+class ActivityPolicy:
+    def is_valid_activity_type(self, activity_type:str):
+        from src.utils.config import load_config
+        config=load_config()
+        valid_activities = config.get("base_activities")
+        return activity_type in valid_activities
+    
+    def is_valid_tag(self, tags:list[str]):
+        from src.utils.config import load_config
+        config=load_config()
+        valid_tags = config.get("valid_tags")
+        for tag in tags:
+            if tag not in valid_tags:
+                return False
+        return True
+    
 class ActivityManager: 
     _instance = None
     

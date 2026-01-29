@@ -22,6 +22,13 @@ class Mission:
             accomplishments:list["Accomplishment"] | None = None,
             professions:list["Profession"] | None = None
             ):
+        mission_policy=MissionPolicy()
+        if (
+            mission_policy.is_valid_bonus([] if bonus is None else bonus) or
+            mission_policy.is_valid_deadline(deadline)
+        ):
+            raise ValueError("invalid bonus or deadline")
+        del mission_policy
         self._id: int = -1
         self._load: int = 0
         self._name=name
@@ -144,6 +151,27 @@ class Mission:
             punishment_class=class_factory.create_class(punishment.get("name"),Punishment,attr)  # type: ignore
             reward.apply_punishments(punishment_class(punishment.get("value")))
         return reward
+
+class MissionPolicy:
+    def is_valid_deadline(self, deadline:datetime | None):
+        if deadline:
+            return deadline > datetime.now()
+        else:
+            return True
+
+    def is_valid_bonus(self, bonus_list:list[dict[str, Any]]):
+        from src.utils.config import load_config
+        config=load_config()
+        valid_bonus = config.get("bonus")
+        valid_keys = ["name", "type", "load"]
+        for bonus in bonus_list:
+            for key in valid_keys:
+                if key not in list(bonus.keys()):
+                    return False
+            if bonus.get("name", "") not in valid_bonus:
+                return False
+        return True
+
 
 class MissionManager:
     _instance = None
