@@ -8,9 +8,9 @@ base_activities:
   - others
 
 valid_tags:
-  - "daily"
-  - "uncomfortable"
-  - "generic"
+  - daily
+  - uncomfortable
+  - generic
 
 valid_status:
   - locked
@@ -35,6 +35,13 @@ bonus:
 punishments:
   - delay
   - anti-value
+
+attributes:
+  - activeness
+  - courage
+  - clarity
+  - positivity
+  - strategy
 
 profession_multiplier: 1
 base_activity_multiplier: 1

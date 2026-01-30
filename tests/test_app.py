@@ -54,7 +54,7 @@ def test_database():
     
 
     act=BaseActivity("dance", 12)
-    attr=Attribute("abc", "mind", True)
+    attr=Attribute("activeness", "mind", True)
     
     attr_orm=create_attribute_orm(attr)
     session.add(attr_orm)
@@ -73,7 +73,7 @@ def test_database():
     
     fetched_attribute=session.query(AttributeORM).options(
         joinedload(AttributeORM.base_activities)
-        ).filter(AttributeORM.name=="abc").all()
+        ).filter(AttributeORM.name=="activeness").all()
     
     print("🌋🌋🌋🌋🌋👌👌",fetched_attribute[-1])
     orm_2: AttributeORM=attribute_domain_to_orm(attr)

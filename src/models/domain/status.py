@@ -12,8 +12,11 @@ class Attribute:
             base_activities: list["BaseActivity"] | None = None
             ):
         attribute_policy=AttributePolicy()
-        if not attribute_policy.is_valid_area(area):
-            raise ValueError("invalid area")
+        if not (
+            attribute_policy.is_valid_area(area) and
+            attribute_policy.is_valid_attribute(name)
+        ):
+            raise ValueError("invalid area or name")
         del attribute_policy
         self._id=-1
         self._load: int=0
@@ -82,6 +85,11 @@ class AttributePolicy:
         config=load_config()
         valid_areas = config.get("areas")
         return area in valid_areas
+    def is_valid_attribute(self, name:str):
+        from src.utils.config import load_config
+        config=load_config()
+        valid_name = config.get("attributes")
+        return name in valid_name
      
 class Status: # singleton
     _instance = None
