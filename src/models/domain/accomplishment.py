@@ -18,8 +18,8 @@ class Accomplishment:
             missions:list["Mission"] | None = None
         ):
         accomplishment_policy=AccomplishmentPolicy()
-        if (
-            accomplishment_policy.is_valid_difficulty(difficulty) or
+        if not (
+            accomplishment_policy.is_valid_difficulty(difficulty) and
             accomplishment_policy.is_valid_status("locked" if status is None else status)
         ):
             raise ValueError("invalid difficulty or status")

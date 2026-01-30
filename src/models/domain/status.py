@@ -12,7 +12,7 @@ class Attribute:
             base_activities: list["BaseActivity"] | None = None
             ):
         attribute_policy=AttributePolicy()
-        if attribute_policy.is_valid_area(area):
+        if not attribute_policy.is_valid_area(area):
             raise ValueError("invalid area")
         del attribute_policy
         self._id=-1

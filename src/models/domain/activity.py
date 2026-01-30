@@ -12,12 +12,12 @@ class BaseActivity:
             self, 
             name: str, 
             xp:float, 
-            activity_type: str = "other",
+            activity_type: str = "others",
             attributes:list["Attribute"] | None = None,
             compound_activities: list["CompoundActivity"] | None = None
             ): 
         base_activity_policy=ActivityPolicy()
-        if base_activity_policy.is_valid_activity_type(activity_type):
+        if not base_activity_policy.is_valid_activity_type(activity_type):
             raise ValueError("invalid activity type")
         del base_activity_policy
         self._id: int = -1
@@ -102,7 +102,7 @@ class CompoundActivity:
             missions: list["Mission"] | None = None
         ):
         compound_activity_policy=ActivityPolicy()
-        if compound_activity_policy.is_valid_tag([] if tags is None else tags):
+        if not compound_activity_policy.is_valid_tag([] if tags is None else tags):
             raise ValueError("invalid tag")
         del compound_activity_policy
         self._id: int = -1

@@ -10,7 +10,7 @@ class Title:
             status: str | None = None,
             accomplishments:list["Accomplishment"]|None=None) -> None:
         title_policy=TitlePolicy()
-        if title_policy.is_valid_status("locked" if status is None else status):
+        if not title_policy.is_valid_status("locked" if status is None else status):
             raise ValueError("invalid bonus")
         del title_policy
         self._id=0

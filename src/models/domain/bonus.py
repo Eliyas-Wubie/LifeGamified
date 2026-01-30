@@ -6,7 +6,7 @@ class Bonus(ABC):
     bonus_type : str
     def __init__(self, bonus:Any) -> None:
         bonus_policy=BonusPolicy()
-        if bonus_policy.is_valid_bonus(bonus):
+        if not bonus_policy.is_valid_bonus(bonus):
             raise ValueError("invalid bonus")
         del bonus_policy
         self._bonus=bonus

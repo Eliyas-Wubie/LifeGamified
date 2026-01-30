@@ -15,7 +15,13 @@ valid_tags:
 valid_status:
   - locked
   - unlocked
-
+valid_profession_status:
+  - locked
+  - beginner
+  - intermediate
+  - advanced
+  - master
+  - infinity
 areas:
   - mind
   - body

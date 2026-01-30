@@ -16,7 +16,7 @@ from src.models.services.accomplishment import create_accomplishment_orm
 from src.models.services.title import create_title_orm
 from src.models.state.accomplishment import AccomplishmentCache
 from typing import Any
-from datetime import datetime
+from datetime import datetime, timedelta
 from sqlalchemy.orm import joinedload
 
 config=load_config()
@@ -32,7 +32,7 @@ def test_base_activity_class_factory():
         "perform":perform
     }
     class_list=[dynamic_class_factory.create_class(base_activity, BaseActivity, test_attrs) for base_activity in config.get("base_activities")]
-    test_obj=class_list[0]("test", 12, None)
+    test_obj=class_list[0]("test", 12)
     assert len(class_list)>0
     assert isinstance(test_obj, BaseActivity)
     assert isinstance(test_obj.perform(), Reward)
@@ -40,7 +40,7 @@ def test_base_activity_class_factory():
 
 def test_compound_activity():
     global config, class_list
-    base_activities: list[BaseActivity]=[BAclass("create", 1, {}) for BAclass in class_list]
+    base_activities: list[BaseActivity]=[BAclass("laugh", 1) for BAclass in class_list]
     my_compound_obj=CompoundActivity( "dance", 112, [], base_activities, [], [])
     
     assert isinstance(my_compound_obj, CompoundActivity)
@@ -87,15 +87,15 @@ def test_database():
     assert domain.xp == 12
     assert isinstance(domain.attributes,list)
     
-    new_prof2=Profession("bus_driver", "begineer")
-    new_prof=Profession("dirver", "begineer", sub_professions=[new_prof2])
+    new_prof2=Profession("bus_driver", "beginner")
+    new_prof=Profession("driver", "beginner", sub_professions=[new_prof2])
     prof_orm=create_profession_orm(new_prof)
     session.add(prof_orm)
     session.commit()
     
     fetched_profession=session.query(ProfessionORM).options(
         joinedload(ProfessionORM.parent)
-        ).filter(ProfessionORM.name=="dirver").all()
+        ).filter(ProfessionORM.name=="driver").all()
     print("🚀🚀🚀🚀", fetched_profession[-1], fetched_profession[-1].name, fetched_profession[-1].status, fetched_profession[-1].sub_professions )
     assert isinstance(fetched_profession, list)
     
@@ -131,7 +131,7 @@ def test_database():
     assert isinstance(fetched_profession2, list)
     
     #next handle mission and connect it back to profession
-    mission1=Mission("run","descrippppption", datetime.now(), [{"name":"bravery", "type":"xp", "value":11}],[my_compound_obj],[],[])
+    mission1=Mission("run","descrippppption", datetime.now() + timedelta(days=1), [{"name":"facing fear", "type":"xp", "load":11}],[my_compound_obj],[],[])
     mission1_orm=create_mission_orm(mission1)
     session.add(mission1_orm)
     session.flush()

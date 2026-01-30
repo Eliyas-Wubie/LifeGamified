@@ -5,7 +5,7 @@ def test_perform_activity():
     attribute = Attribute("bravery", "spirit", True)
     attribute.load = 12
     base_activity_1=BaseActivity("create", 2.7, "create", [attribute])
-    base_activity_2=BaseActivity("craft", 6.7, "sync")
+    base_activity_2=BaseActivity("craft", 6.7, "others")
     profession_1 = Profession("Artist", "beginner")
     profession_1.load = 40
     compound_activity=CompoundActivity("sculpt", 40, [],[base_activity_1, base_activity_2],[profession_1])

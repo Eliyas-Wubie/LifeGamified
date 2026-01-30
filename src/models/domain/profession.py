@@ -18,8 +18,8 @@ class Profession:
             accomplishments: list["Accomplishment"] | None=None,
             ):
         profession_policy=ProfessionPolicy()
-        if profession_policy.is_valid_status("locked" if status is None else status):
-            raise ValueError("invalid difficulty or status")
+        if not profession_policy.is_valid_status("locked" if status is None else status):
+            raise ValueError("invalid or status")
         del profession_policy
         self._id: int = -1
         self._name = name
@@ -119,7 +119,7 @@ class ProfessionPolicy:
     def is_valid_status(self, status:str):
         from src.utils.config import load_config
         config=load_config()
-        valid_status: list[str]=config.get("valid_status")
+        valid_status: list[str]=config.get("valid_profession_status")
         return status in valid_status
 
 # handle cascading logic - can only perform action on this domain model - thus it should be a service

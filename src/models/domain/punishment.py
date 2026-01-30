@@ -6,7 +6,7 @@ class Punishment(ABC):
     punishment_type : str
     def __init__(self, punishment:Any) -> None:
         punishment_policy=PunishmentPolicy()
-        if punishment_policy.is_valid_punishment(punishment):
+        if not punishment_policy.is_valid_punishment(punishment):
             raise ValueError("invalid punishment")
         del punishment_policy
         self._punishment = punishment

@@ -23,8 +23,8 @@ class Mission:
             professions:list["Profession"] | None = None
             ):
         mission_policy=MissionPolicy()
-        if (
-            mission_policy.is_valid_bonus([] if bonus is None else bonus) or
+        if not (
+            mission_policy.is_valid_bonus([] if bonus is None else bonus) and
             mission_policy.is_valid_deadline(deadline)
         ):
             raise ValueError("invalid bonus or deadline")
