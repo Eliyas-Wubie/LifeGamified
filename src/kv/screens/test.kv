@@ -1,0 +1,16 @@
+#:kivy 2.3.0
+<TestScreen>:
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "center"
+
+        FloatLayout:
+            size_hint: None, None
+            size: 200, 200
+
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size

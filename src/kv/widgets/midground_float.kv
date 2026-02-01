@@ -1,0 +1,14 @@
+#:kivy 2.3.0
+<MidGroundFloat>:
+    size: self.parent.size
+    pos: self.parent.pos
+    BoxLayout: # body
+        pos: root.pos
+        size: root.size
+        orientation: "vertical"
+        Nav:
+        ContentArea:
+            offset: root.offset
+    FloatingButtons:
+        size: 40,250
+        pos: root.offset, root.height - 350

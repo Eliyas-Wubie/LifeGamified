@@ -1,0 +1,14 @@
+#:kivy 2.3.0
+<CircleImage>:
+    canvas:
+        StencilPush
+        Ellipse:
+            size: self.width, self.height
+            pos: self.pos
+        StencilUse
+        Rectangle:
+            source: root.image_path
+            size: self.size
+            pos: self.pos
+        StencilUnUse
+        StencilPop
