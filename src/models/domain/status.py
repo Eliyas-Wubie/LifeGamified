@@ -99,13 +99,31 @@ class Status: # singleton
             cls._instance = super().__new__(cls)
         return cls._instance    
     
-    def __init__(self, xp:float=0, level:int=0, attributes:list[Any] | None = None, titles:list[Any] | None = None) -> None:
+    def __init__(self, name: str,xp:float=0, level:int=0, attributes:list[Any] | None = None, titles:list[Any] | None = None) -> None:
         self._id = -1
+        self._name = name
         self._xp=xp
         self._level=level
         self._attributes=attributes
         self._titles=titles
+        self._xp_rate: float=0
+
+    @property
+    def xp_rate(self):
+        return self._xp_rate
     
+    @xp_rate.setter
+    def xp_rate(self, new_xp_rate:float):
+        self._xp_rate = new_xp_rate
+
+    @property
+    def name(self):
+        return self._name
+    
+    @name.setter
+    def name(self, new_name:float):
+        self._name = new_name
+
     @property
     def id(self):
         return self._id

@@ -1,7 +1,7 @@
 from src.models.domain.activity import BaseActivity, CompoundActivity
 from src.models.domain.profession import Profession
 from src.models.domain.mission import Mission
-from src.models.domain.status import Attribute
+from src.models.domain.status import Attribute, Status
 from src.models.domain.accomplishment import Accomplishment
 from src.models.domain.titles import Title
 from src.models.state.reward_states import Reward
@@ -9,7 +9,7 @@ from src.utils.config import load_config
 from src.utils.class_factory import ClassFactory
 from src.models.db.models import *
 from src.models.services.activity import create_activity_orm, activity_orm_to_domain, create_compound_activity_orm
-from src.models.services.status import attribute_domain_to_orm, create_attribute_orm, attribute_orm_to_domain, populate_base_activities
+from src.models.services.status import attribute_domain_to_orm, create_attribute_orm, attribute_orm_to_domain, populate_base_activities, create_status_orm
 from src.models.services.profession import  create_profession_orm 
 from src.models.services.mission import create_mission_orm
 from src.models.services.accomplishment import create_accomplishment_orm
@@ -51,8 +51,10 @@ def test_database():
     from src.models.db.session import SessionLocal
     
     session = SessionLocal() 
-    
-
+    status = Status("Eliyas Wubie")
+    status_orm = create_status_orm(status)
+    session.add(status_orm)
+    session.commit()
     act=BaseActivity("dance", 12)
     attr=Attribute("activeness", "mind", True)
     

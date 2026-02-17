@@ -3,6 +3,7 @@ from src.models.db.models import AttributeORM, StatusORM
 from src.models.domain.status import Attribute, Status
 from typing import Any, TYPE_CHECKING
 from src.models.db.session import SessionLocal
+from datetime import datetime, timedelta
 
 if TYPE_CHECKING:
     from src.models.db.models import BaseActivityAttributeORM
@@ -93,7 +94,7 @@ def delete_attribute(domain:Attribute):
 # create, persist, edit, link, reset, status
 
 def status_orm_to_domain(orm: StatusORM)->Status:
-    domain:Status = Status(xp=orm.xp, level=orm.level)
+    domain:Status = Status(name=orm.name, xp=orm.xp, level=orm.level)
     domain.id=orm.id
     return domain
 
@@ -102,9 +103,39 @@ def status_domain_to_orm(domain: Status) -> StatusORM:
     return status
 
 def create_status_orm(domain: Status) -> StatusORM:
-    orm = StatusORM(xp=domain.xp, level=domain.level)
+    orm = StatusORM(name= domain.name, xp=domain.xp, level=domain.level)
     return orm
 
+def get_player_profile() -> Status | None:
+    orm = session.query(StatusORM).first()
+    if orm:
+        domain = status_orm_to_domain(orm)
+        return domain
+    else:
+        return None
+
+def evaluate_xp_rate() -> float | None:
+    orm = session.query(StatusORM).first()
+    if not orm:
+        return
+    start_date: datetime = orm.created_at
+    latest_date: datetime = orm.updated_at
+    x: timedelta = latest_date - start_date
+    if x.days == 0:
+        return orm.xp
+    return orm.xp/x.days
+    
+    
+
+def create_player(name:str) -> Status | None:
+    print("name",name)
+    domain = Status(name)
+    orm = create_status_orm(domain)
+    session.add(orm)
+    session.commit()
+
+    return domain
+    
 def persist_status_orm(orm:StatusORM):
     existing = session.query(StatusORM)
     if existing.all()==[]:

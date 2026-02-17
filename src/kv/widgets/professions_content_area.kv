@@ -1,0 +1,31 @@
+#:kivy 2.3.0
+<ProfessionsContentArea>:
+    BoxLayout: # default content
+        orientation: "vertical"
+        canvas.before:
+            Color:
+                rgba: 1,1,1,0.75
+            RoundedRectangle:
+                source: "src/assets/grid3.jpg"
+                pos: self.pos
+                size: self.size
+                radius:[20]
+        Scatter:    
+            id: scatter
+            size: self.parent.size
+            size_hint: 1, 1
+            do_rotation: False
+            do_translation: True
+            do_scale: True
+            scale_min: 0.5
+            scale_max: 3
+
+            BoxLayout:
+                id: world
+                size_hint: None, None
+                size: root.width, root.height
+                pos: (scatter.width - self.width)/2, (scatter.height - self.height)/2
+                orientation: "vertical"
+                ProfessionList:
+                    professions: root.professions
+                    visible: True

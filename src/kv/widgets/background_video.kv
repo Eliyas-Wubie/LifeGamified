@@ -1,0 +1,20 @@
+#:kivy 2.3.0
+<BackgroundVideo>:
+    FloatLayout:
+        Video:
+            source: root.video_path
+            state: "play"
+            options: {"eos": "loop"}
+            controls: False
+            allow_stretch: False
+            keep_ratio: True
+            size_hint: None, None
+            size: self.texture_size
+            pos: ((self.parent.width - self.width) / 2, (self.parent.height - self.height) / 2)
+        Widget:
+            canvas.before:
+                Color:
+                    rgba: 0,0,0,root.overlay_opacity
+                Rectangle:
+                    pos: self.pos
+                    size: self.size

@@ -1,18 +1,80 @@
 #:kivy 2.3.0
+#:import Animation kivy.animation.Animation
 <BackgroundBox>:
-    Image:
-        canvas.after:
-            Color:
-                rgba: 0, 0, 0, 0.7   # black with 50% opacity
-            Rectangle:
-                pos: self.pos
-                size: self.size
-        source: root.bg_image
-        allow_stretch: False
-        keep_ratio: True
-        size_hint: None, None
-        size: self.texture_size
-        pos: ((self.parent.width - self.width) / 2, (self.parent.height - self.height) / 2)
+    
+    ## ------------------ Background Color Change
+    # bg_rgba: 0.2, 0.4, 0.8, 1
+
+    # canvas.before:
+    #     Color:
+    #         rgba: root.bg_rgba
+    #     Rectangle:
+    #         pos: self.pos
+    #         size: self.size
+
+    # on_kv_post:
+    #     anim = (Animation(bg_rgba=(0.8, 0.3, 0.5, 1), duration=2)+ Animation(bg_rgba=(0.2, 0.4, 0.8, 1), duration=2))
+    #     anim.bind(on_complete=lambda *a: (Animation(bg_rgba=(0.8, 0.3, 0.5, 1), duration=2) + Animation(bg_rgba=(0.2, 0.4, 0.8, 1), duration=2)).start(self))
+    #     anim.start(self)
+
+    #------------------ Background Breath
+    bg_rgba: 0, 0.68, 0.93, 0.3
+    r_pos: 0,0
+    canvas.before:
+        Color:
+            rgba: root.bg_rgba
+        Rectangle:
+            pos: self.pos
+            size: self.size
+        # Color:
+        #     rgba: 0,0,1,1
+        # Rectangle:
+        #     pos: root.r_pos
+        #     size: 10, 100
+
+    on_kv_post:
+        anim = (Animation(bg_rgba=(0.1, 0.50, 0.9,0.3), r_pos=(100,100), duration=4, t='in_out_sine') + Animation(bg_rgba=(0.71, 0, 0.93,0.3), r_pos=(400,400), duration=4, t='in_out_sine'))
+        anim.bind(on_complete=lambda *a: (Animation(bg_rgba=(0.1, 0.50, 0.9,0.3), r_pos=(100,100), duration=4, t='in_out_sine') + Animation(bg_rgba=(0.71, 0, 0.93,0.3), r_pos=(400,400), duration=4, t='in_out_sine')).start(self))
+        anim.start(self)
+
+
+    g1: 0.8, 0.3, 0.5, 0.3
+    g2: 0.2, 0.4, 0.8, 0.3
+
+    # canvas.before:
+    #     Color:
+    #         rgba: root.g1
+    #     Rectangle:
+    #         pos: -self.width * 0.2, 0
+    #         size: self.width * 1.4, self.height
+
+    #     Color:
+    #         rgba: root.g2
+    #     Rectangle:
+    #         pos: self.width * 0.2, 0
+    #         size: self.width * 1.4, self.height
+
+    # on_kv_post:
+    #     # create the animation
+
+    #     anim = (Animation(g1=(0.5, 0.4, 0.8, 0.3), g2=(0.8, 0.2, 0.4, 0.3), duration=6)+ Animation(g1=(0.8, 0.3, 0.5, 0.3), g2=(0.2, 0.4, 0.8, 0.3), duration=6))
+    #     anim.bind(on_complete=lambda *a: anim.start(self))
+    #     anim.start(self)
+
+
+    # Image:
+    #     canvas.after:
+    #         Color:
+    #             rgba: 0, 0, 0, 0.7   # black with 50% opacity
+    #         Rectangle:
+    #             pos: self.pos
+    #             size: self.size
+    #     source: root.bg_image
+    #     allow_stretch: False
+    #     keep_ratio: True
+    #     size_hint: None, None
+    #     size: self.texture_size
+    #     pos: ((self.parent.width - self.width) / 2, (self.parent.height - self.height) / 2)
 
 
 

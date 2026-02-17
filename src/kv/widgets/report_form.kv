@@ -1,0 +1,239 @@
+#:kivy 2.3.0
+<ReportForm>:
+
+    orientation: "vertical"
+    BoxLayout:
+        orientation: "vertical"
+        size_hint_x:None
+        width: root.width - 200
+        pos_hint: {"center_x":0.5}
+
+        ScrollView:
+            size_hint: 1, 1  # full size
+            do_scroll_x: False  # only vertical scrolling
+            do_scroll_y: True
+            BoxLayout:
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height 
+                Collapsible:
+                    orientation:"vertical"
+                    expanded: False
+                    BoxLayout: # control
+                        size_hint_y:None
+                        height: 80
+                        canvas.before:
+                            Color:
+                                rgba: 0,0,0.1,1
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        Label:
+                            text:"Missions"
+                        IconButton:
+                            image_path: "src/assets/dropdown.png"
+                            size_hint: None, None
+                            size: 20, 20
+                            hover_enabled: False
+                            on_press: self.parent.parent.expanded = not self.parent.parent.expanded
+                        Widget:
+                            size_hint_x: None
+                            width: 20
+                    BoxLayout:
+                        orientation:"vertical"
+                        size_hint_y: None
+                        height:self.minimum_height if self.parent.expanded else 0
+                        opacity:1 if self.parent.expanded else 0
+                        padding: [20,20]
+                        canvas.before:
+                            Color:
+                                rgba: 0,0,1,0.2
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        ListWidget:
+                            size_hint_y: None
+                            height:self.minimum_height if self.parent.parent.expanded else 0
+                            orientation:"vertical"
+                            items: root.missions
+                            control: root.mission_control
+                Collapsible:
+                    orientation:"vertical"
+                    expanded: False
+                    BoxLayout: # control
+                        size_hint_y:None
+                        height: 80
+                        canvas.before:
+                            Color:
+                                rgba: 0,0,0.1,1
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        Label:
+                            text:"Daily Activities"
+                        IconButton:
+                            image_path: "src/assets/dropdown.png"
+                            size_hint: None, None
+                            size: 20, 20
+                            hover_enabled: False
+                            on_press: self.parent.parent.expanded = not self.parent.parent.expanded
+                        Widget:
+                            size_hint_x: None
+                            width: 20
+                    BoxLayout:
+                        orientation:"vertical"
+                        size_hint_y: None
+                        height:self.minimum_height if self.parent.expanded else 0
+                        opacity:1 if self.parent.expanded else 0
+                        padding: [20,20]
+                        canvas.before:
+                            Color:
+                                rgba: 0,0,1,0.2
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        ListWidget:
+                            size_hint_y: None
+                            height:self.minimum_height if self.parent.parent.expanded else 0
+                            orientation:"vertical"
+                            items: root.daily_activities
+                            control: root.daily_activities_control
+                Collapsible:
+                    orientation:"vertical"
+                    expanded: False
+                    BoxLayout: # control
+                        size_hint_y:None
+                        height: 80
+                        canvas.before:
+                            Color:
+                                rgba: 0,0,0.1,1
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        Label:
+                            text:"Uncomfortable Activities"
+                        IconButton:
+                            image_path: "src/assets/dropdown.png"
+                            size_hint: None, None
+                            size: 20, 20
+                            hover_enabled: False
+                            on_press: self.parent.parent.expanded = not self.parent.parent.expanded
+                        Widget:
+                            size_hint_x: None
+                            width: 20
+                    BoxLayout:
+                        orientation:"vertical"
+                        size_hint_y: None
+                        height:self.minimum_height if self.parent.expanded else 0
+                        opacity:1 if self.parent.expanded else 0
+                        padding: [20,20]
+                        canvas.before:
+                            Color:
+                                rgba: 0,0,1,0.2
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        ListWidget:
+                            size_hint_y: None
+                            height:self.minimum_height if self.parent.parent.expanded else 0
+                            orientation:"vertical"
+                            items: root.uncomfortable_activities
+                            control: root.uncomfortable_activities_control
+                Collapsible:
+                    orientation:"vertical"
+                    expanded: False
+                    BoxLayout: # control
+                        size_hint_y:None
+                        height: 80
+                        canvas.before:
+                            Color:
+                                rgba: 0,0,0.1,1
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        Label:
+                            text:"Generic Activities"
+                        IconButton:
+                            image_path: "src/assets/dropdown.png"
+                            size_hint: None, None
+                            size: 20, 20
+                            hover_enabled: False
+                            on_press: self.parent.parent.expanded = not self.parent.parent.expanded
+                        Widget:
+                            size_hint_x: None
+                            width: 20
+                    BoxLayout:
+                        orientation:"vertical"
+                        size_hint_y: None
+                        height:self.minimum_height if self.parent.expanded else 0
+                        opacity:1 if self.parent.expanded else 0
+                        padding: [20,20]
+                        canvas.before:
+                            Color:
+                                rgba: 0,0,1,0.2
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        ListWidget:
+                            size_hint_y: None
+                            height:self.minimum_height if self.parent.parent.expanded else 0
+                            orientation:"vertical"
+                            items: root.generic_activities
+                            control: root.generic_activities_control
+                Collapsible:
+                    orientation:"vertical"
+                    expanded: False
+                    # disabled: not root.visible
+                    BoxLayout: # control
+                        size_hint_y:None
+                        height: 80
+                        canvas.before:
+                            Color:
+                                rgba: 0,0,0.1,1
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        Label:
+                            text:"Accomplishments"
+                        IconButton:
+                            image_path: "src/assets/dropdown.png"
+                            size_hint: None, None
+                            size: 20, 20
+                            hover_enabled: False
+                            on_press: self.parent.parent.expanded = not self.parent.parent.expanded
+                        Widget:
+                            size_hint_x: None
+                            width: 20
+                    BoxLayout:
+                        orientation:"vertical"
+                        size_hint_y: None
+                        height:self.minimum_height if self.parent.expanded else 0
+                        opacity:1 if self.parent.expanded else 0
+                        padding: [20,20]
+                        canvas.before:
+                            Color:
+                                rgba: 0,0,1,0.2
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        ListWidget:
+                            size_hint_y: None
+                            height:self.minimum_height if self.parent.parent.expanded else 0
+                            orientation:"vertical"
+                            items: root.accomplishments
+                            control: root.accomplishments_control
+                Widget:
+        BoxLayout:
+            orientation: "horizontal"
+            padding:[20]
+            size_hint_y: None
+            height: 80
+            Widget:
+            Button:
+                text: "Report"
+                size_hint_y: None
+                height: 50
+                on_press: root.submit_form()
+            Widget:
+
+

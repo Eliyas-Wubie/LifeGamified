@@ -36,10 +36,13 @@ Thumbs.db
 
 # --- Logs ---
 *.log
-
+*.mp4
 # --- Coverage ---
 .coverage
 htmlcov/
 
 TODO.md
 local_life_gamified.db
+src/assets/12900822_1920_1080_30fps.mp4
+src/assets/14770388_1920_1080_24fps.mp4
+.gitIgnore

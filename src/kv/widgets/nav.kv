@@ -1,23 +1,47 @@
 #:kivy 2.3.0
 <Nav>:
     orientation: "horizontal"
+    canvas.before:
+        Color:
+            rgba: 0,0,0,0.8
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [10]
     size_hint_y: None
-    height: 50
+    height: 70
+    padding: [10,6]
     IconButton:
+        image_path: "src/assets/settings.png"
         size_hint: None, None
-        size: 50, 50
+        base_width: 60
+        base_height: 60
+        hover_enabled: False
+        on_press: root.set_control("settings")
     Widget:
     BoxLayout:
         orientation: "horizontal"
+        size_hint_min_x: dp(140)
         IconButton:
+            image_path: "src/assets/home.png"
             size_hint: None, None
-            size: 40, 40
+            on_press: root.set_control("stats")
         Widget:
         IconButton:
+            image_path: "src/assets/report.png"
             size_hint: None, None
-            size: 40, 40
+            on_press: root.set_control("reports")
         Widget:
         IconButton:
+            image_path: "src/assets/attr.png"
+
             size_hint: None, None
-            size: 40, 40
+            on_press: root.set_control("attributes")
+
+        Widget:
+        IconButton:
+            image_path: "src/assets/tree.png"
+            size_hint: None, None
+            on_press: root.set_control("professions")
+
 

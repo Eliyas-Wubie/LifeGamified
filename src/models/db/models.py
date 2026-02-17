@@ -4,10 +4,34 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from src.models.db.base import Base
 from typing import Any
 from datetime import datetime
+from datetime import datetime
+from sqlalchemy import DateTime, func
+from sqlalchemy.orm import Mapped, mapped_column
+
+class TimestampMixin:
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        nullable=False
+    )
+
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        onupdate=func.now(),
+        nullable=False
+    )
+
+    deleted_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True
+    )
+
 
 
 # Main Tables
-class BaseActivityORM(Base):
+
+class BaseActivityORM(TimestampMixin,Base):
     __tablename__="base_activities"
     
     id: Mapped[int]= mapped_column(primary_key=True)
@@ -23,7 +47,7 @@ class BaseActivityORM(Base):
         cascade="all, delete-orphan"
     )
 
-class CompoundActivityORM(Base):
+class CompoundActivityORM(TimestampMixin,Base):
     __tablename__ = "compound_activities"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -43,7 +67,7 @@ class CompoundActivityORM(Base):
         cascade="all, delete-orphan"
     )
 
-class MissionORM(Base):
+class MissionORM(TimestampMixin,Base):
     __tablename__ = "missions"
     id:Mapped[int]=mapped_column(primary_key=True)
     name: Mapped[str]=mapped_column(String, nullable=False)
@@ -63,7 +87,7 @@ class MissionORM(Base):
         back_populates="mission"
     )
           
-class ProfessionORM(Base):
+class ProfessionORM(TimestampMixin,Base):
     __tablename__ = "professions"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -97,7 +121,7 @@ class ProfessionORM(Base):
     )
     # relation to accomplishments
 
-class AccomplishmentORM(Base):
+class AccomplishmentORM(TimestampMixin,Base):
     __tablename__="accomplishments"
     
     id:Mapped[int]=mapped_column(Integer, primary_key=True)
@@ -119,7 +143,7 @@ class AccomplishmentORM(Base):
         back_populates="accomplishment"
     )
 
-class TitleORM(Base):
+class TitleORM(TimestampMixin,Base):
     __tablename__ =  "titles"
     id: Mapped[int]=mapped_column(Integer, primary_key=True)
     name: Mapped[str]=mapped_column(Integer, nullable=False, unique=True)
@@ -130,7 +154,7 @@ class TitleORM(Base):
         cascade="all, delete-orphan"
     )
     
-class AttributeORM(Base):
+class AttributeORM(TimestampMixin,Base):
     __tablename__ = "attributes"
     
     id: Mapped[int]=mapped_column(Integer, primary_key=True)
@@ -145,7 +169,7 @@ class AttributeORM(Base):
         back_populates="attribute"
     )
 
-class DailyReportORM(Base):
+class DailyReportORM(TimestampMixin,Base):
     __tablename__ = "daily_reports"
     
     id:Mapped[int] = mapped_column(primary_key=True)
@@ -153,7 +177,7 @@ class DailyReportORM(Base):
     compound_activities:Mapped[list["DailyReportCompoundActivityORM"]]=relationship(back_populates="daily_report")
     missions:Mapped[list["DailyReportMissionORM"]]=relationship(back_populates="daily_report")
 
-class StatusORM(Base):
+class StatusORM(TimestampMixin,Base):
     __tablename__ = "status"
     _instance = None
     
@@ -163,6 +187,7 @@ class StatusORM(Base):
         return cls._instance        
     
     id:Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String,  nullable= False)
     xp:Mapped[float] =  mapped_column(Float, nullable=False)
     level:Mapped[int] = mapped_column(Integer, nullable=False)
     attributes:Mapped[list["StatusAttributeORM"]]=relationship(back_populates="status")
@@ -171,7 +196,7 @@ class StatusORM(Base):
 
 # ASSOCIATIONS
 
-class BaseActivityAttributeORM(Base):
+class BaseActivityAttributeORM(TimestampMixin,Base):
     __tablename__ = "base_activities_attributes"
     
     base_activity_id: Mapped[int] = mapped_column(
@@ -196,7 +221,7 @@ class BaseActivityAttributeORM(Base):
         back_populates="base_activities"
         )
     
-class BaseActivityCompoundActivityORM(Base):
+class BaseActivityCompoundActivityORM(TimestampMixin,Base):
     __tablename__ = "base_activities_compound_activities"
     
     compound_activity_id: Mapped[int] = mapped_column(
@@ -222,7 +247,7 @@ class BaseActivityCompoundActivityORM(Base):
         back_populates="base_activities"
     )
 
-class CompoundActivityMissionORM(Base): # 
+class CompoundActivityMissionORM(TimestampMixin,Base): # 
     __tablename__ = "compound_activities_missions"
     mission_id:Mapped[int]=mapped_column(
         ForeignKey("missions.id"),
@@ -239,7 +264,7 @@ class CompoundActivityMissionORM(Base): #
         back_populates="missions"
     )
 
-class CompoundActivityProfessionORM(Base): # 
+class CompoundActivityProfessionORM(TimestampMixin,Base): # 
     __tablename__ = "compound_activities_profession"
 
     compound_activity_id: Mapped[int] = mapped_column(
@@ -268,7 +293,7 @@ class CompoundActivityProfessionORM(Base): #
         back_populates="compound_activities"
     )
 
-class MissionAccomplishmentORM(Base):
+class MissionAccomplishmentORM(TimestampMixin,Base):
     __tablename__ = "missions_accomplishments"
     mission_id:Mapped[int]=mapped_column(
         ForeignKey("missions.id"),
@@ -285,7 +310,7 @@ class MissionAccomplishmentORM(Base):
         back_populates="missions"
     )
 
-class MissionProfessionORM(Base):
+class MissionProfessionORM(TimestampMixin,Base):
     __tablename__ = "missions_professions"
     mission_id:Mapped[int]=mapped_column(
         ForeignKey("missions.id"),
@@ -306,7 +331,7 @@ class MissionProfessionORM(Base):
         back_populates="missions"
     )
 
-class AccomplishmentAttributeORM(Base):
+class AccomplishmentAttributeORM(TimestampMixin,Base):
     __tablename__="accomplishments_attributes"
     accomplishment_id:Mapped[int]=mapped_column(
         ForeignKey("accomplishments.id"),
@@ -327,7 +352,7 @@ class AccomplishmentAttributeORM(Base):
         back_populates="accomplishments"
         )
 
-class AccomplishmentTitleORM(Base):
+class AccomplishmentTitleORM(TimestampMixin,Base):
     __tablename__ = "accomplishments_titles"
     
     accomplishment_id:Mapped[int]=mapped_column(
@@ -345,7 +370,7 @@ class AccomplishmentTitleORM(Base):
         back_populates="accomplishments"
         )
     
-class AccomplishmentProfessionORM(Base):
+class AccomplishmentProfessionORM(TimestampMixin,Base):
     __tablename__ = "accomplishments_professions"
     
     accomplishment_id:Mapped[int]=mapped_column(
@@ -367,7 +392,7 @@ class AccomplishmentProfessionORM(Base):
         back_populates="accomplishments"
         )
 
-class DailyReportCompoundActivityORM(Base):
+class DailyReportCompoundActivityORM(TimestampMixin,Base):
     __tablename__ = "daily_reports_compound_activities"
     
     daily_report_id:Mapped[int]=mapped_column(
@@ -383,7 +408,7 @@ class DailyReportCompoundActivityORM(Base):
         )
     compound_activity:Mapped["CompoundActivityORM"]=relationship()
     
-class DailyReportMissionORM(Base):
+class DailyReportMissionORM(TimestampMixin,Base):
     __tablename__ = "daily_reports_missions"
     
     daily_report_id:Mapped[int]=mapped_column(
@@ -399,7 +424,7 @@ class DailyReportMissionORM(Base):
         )
     mission:Mapped["MissionORM"]=relationship()
 
-class StatusAttributeORM(Base):
+class StatusAttributeORM(TimestampMixin,Base):
     __tablename__ = "status_attributes"
     
     status_id:Mapped[int]=mapped_column(
@@ -415,7 +440,7 @@ class StatusAttributeORM(Base):
         )
     attribute:Mapped["AttributeORM"]=relationship()
     
-class StatusTitleORM(Base):
+class StatusTitleORM(TimestampMixin,Base):
     __tablename__ = "status_titles"
     
     status_id:Mapped[int]=mapped_column(

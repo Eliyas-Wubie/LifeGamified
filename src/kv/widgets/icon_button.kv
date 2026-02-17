@@ -1,5 +1,7 @@
 #:kivy 2.3.0
 <IconButton>:
-    background_normal:root.image_path
+    width: root.base_width + (10 if root.hover and root.hover_enabled else 0)
+    height: root.base_height + (10 if root.hover and root.hover_enabled else 0)
+    background_normal: root.image_path
     background_down: root.image_path
     border: (0,0,0,0)

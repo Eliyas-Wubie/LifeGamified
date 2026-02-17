@@ -7,8 +7,43 @@
         size: root.size
         orientation: "vertical"
         Nav:
-        ContentArea:
-            offset: root.offset
-    FloatingButtons:
-        size: 40,250
-        pos: root.offset, root.height - 350
+            control: root.set_current_content
+        
+        ScreenManager:
+            id: sm
+            Screen:
+                name: "stats"
+                StatsContentArea:
+                    create_form: False
+                    content: root.local_list
+                    offset: root.offset
+            Screen:
+                name: "reports"
+                ReportsContentArea:
+                    content: root.local_list
+                    offset: root.offset
+                    visible: True
+            Screen:
+                name: "attributes"
+                AttributesContentArea:
+                    content: root.local_list
+                    offset: root.offset
+                    visible: True
+            Screen:
+                name: "professions"
+                ProfessionsContentArea:
+                    content: root.local_list
+                    offset: root.offset
+                    visible: True
+            Screen:
+                name: "settings"
+                SettingsContentArea:
+                    content: root.local_list
+                    offset: root.offset
+                    visible: root.current_content  == "settings"
+                    canvas.before:
+                        Color:
+                            rgba: 1,0,0,1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size

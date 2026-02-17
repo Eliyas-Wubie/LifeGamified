@@ -9,7 +9,7 @@ from kivy.properties import NumericProperty # type: ignore
 Builder.load_file("src/kv/screens/home.kv") # type: ignore
 
 class HomeScreen(Screen):
-    custom_padding = NumericProperty(80) # type: ignore
+    custom_padding = NumericProperty(40) # type: ignore
     def on_enter(self): # type: ignore
         # fetch necessary data
         print("Home loaded")

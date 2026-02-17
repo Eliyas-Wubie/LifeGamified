@@ -1,0 +1,115 @@
+#:kivy 2.3.0
+#:import NoTransition kivy.uix.screenmanager.NoTransition
+<CompoundActivityCenter>:
+    orientation: "vertical"
+    BoxLayout:
+        orientation: "vertical"
+        size_hint_x:None
+        width: root.width - 200
+        pos_hint: {"center_x":0.5}
+        BoxLayout:
+            orientation: "horizontal"
+            padding:[20]
+            size_hint_y: None
+            height: 80
+            Widget:
+            TextInput:
+                on_text: root.search(self.text)
+                font_size: 16
+                background_normal: ""
+                background_active: ""
+                background_color: 1, 1, 1, 0.2
+                foreground_color: 1, 1, 1, 1
+                cursor_color: 1, 1, 1, 1
+                padding: [10,10]
+                multiline: False
+            Widget:
+            Button:
+                text: "Add Activity" if not root.add_form else "back to list"
+                size_hint_y: None
+                height: 50
+                on_press: root.add_form = not root.add_form
+                background_normal: "src/assets/grid2.jpg"
+            Widget:
+        ScreenManager:
+            id: sm
+            transition: NoTransition()
+            Screen:
+                name: "list"
+                ScrollableList:
+                    id: list
+                    items: root.compound_activities
+                    control: root.delete
+            # control: root.mission_control
+            Screen:
+                name: "form"
+                BoxLayout:
+                    orientation: "vertical"
+                    canvas.before:
+                        Color:
+                            rgba: 0,0,0,0.2
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [20]
+                    Widget:
+                    BoxLayout:
+                        orientation:"horizontal"
+                        padding: 20
+                        size_hint: 0.7, None
+                        height: 80
+                        pos_hint: {"center_x": 0.5}
+                        Label:
+                            text: "name *"
+                            size_hint_x: None
+                            width: max(self.texture_size[0] + dp(20), dp(120))
+                            text_size: None, None
+                        TextInput:
+                            on_text: root.form_name = self.text
+                            font_size: 16
+                            background_normal: ""
+                            background_active: ""
+                            background_color: 1, 1, 1, 0.2
+                            foreground_color: 1, 1, 1, 1
+                            cursor_color: 1, 1, 1, 1
+                            padding: [10,10]
+                            multiline: False
+                    Widget:
+                    BoxLayout:
+                        orientation:"horizontal"
+                        padding: 20
+                        size_hint: 0.7, None
+                        height: 80
+                        pos_hint: {"center_x": 0.5}
+                        Label:
+                            text: "XP"
+                            size_hint_x: None
+                            width: max(self.texture_size[0] + dp(20), dp(120))
+                            text_size: None, None
+                        Slider:
+                            min: 0
+                            max: 10
+                            value: 5
+                            step: 1
+                            on_value: root.form_xp = self.value
+                        # TextInput:
+                            
+                        #     font_size: 16
+                        #     background_normal: ""
+                        #     background_active: ""
+                        #     background_color: 1, 1, 1, 0.2
+                        #     foreground_color: 1, 1, 1, 1
+                        #     cursor_color: 1, 1, 1, 1
+                        #     padding: [10,10]
+                        #     multiline: False
+                    Widget:
+                    Button:
+                        text:"submit"
+                        size_hint_y: None
+                        height: 80
+                        background_normal: "src/assets/grid2.jpg"
+                        on_press: root.submit()
+                        
+        # Widget:
+        #     minimum_height:0
+

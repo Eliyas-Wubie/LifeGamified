@@ -1,0 +1,72 @@
+#:kivy 2.3.0
+<AttributesContentArea>:
+    ScreenManager:
+        id: sm
+        Screen:
+            name: "selector"
+            BoxLayout:
+                orientation:"vertical"
+                size_hint: 0.6, 0.8
+                pos_hint: {"center_x":0.5, "center_y": 0.5}
+                BoxLayout:
+                    orientation:"horizontal"
+                    Widget:
+                    Button:
+                        text:"Mind"
+                        on_press: root.switch_to_detail("mind")
+                    Widget:
+                BoxLayout:
+                    orientation:"horizontal"
+                    Button:
+                        text:"Body"
+                        on_press: root.switch_to_detail("body")
+                    Widget:
+                    Button:
+                        text:"Spirit"
+                        on_press: root.switch_to_detail("spirit")
+        Screen:
+            name: "detail"
+            BoxLayout:
+                orientation: "vertical"
+                BoxLayout:
+                    size_hint_y: None
+                    height: 54
+                    padding: 12
+                    Widget:
+                        size_hint_x: None
+                        width: 40
+                    IconButton:
+                        image_path: "src/assets/back.png"
+                        size_hint: None, None
+                        base_width: 30
+                        base_height: 30
+                        on_press: root.switch_to_selector()
+                    Widget:
+                BoxLayout:
+                    size_hint: 1,1
+                    canvas.before:
+                        Color:
+                            rgba: 1,0,0,1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    Widget:
+                    BoxLayout:
+                        id: list
+                        orientation:"vertical"
+                        size_hint: None, None
+                        width: 700
+                        height: 600
+                        pos_hint: {"center_x": 0.5, "center_y":0.5}
+                        canvas.before:
+                            Color:
+                                rgba: 1,0,1,1
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        ScrollableList:
+                            id: list
+                            include_button: False
+                            items: root.visible_attributes
+                            item_widget: "attr"
+                    Widget:

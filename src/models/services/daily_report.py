@@ -130,3 +130,9 @@ def control_daily_report_mission_link(
 def report_daily_activity(daily_report: "DailyReport"): # persist
     session.add(daily_report)
     session.commit()
+    
+
+def get_all_reports()-> list[DailyReport]:
+    orms = session.query(DailyReportORM).all()
+    domains=[daily_report_orm_to_domain(orm) for orm in orms]
+    return domains
