@@ -10,25 +10,26 @@ Builder.load_file("src/kv/widgets/list_item.kv") # type: ignore
 class ListItem(BoxLayout):
     item=ObjectProperty(None)
     control_list = ObjectProperty(None)
+    check_box = BooleanProperty(True)
     
     def on_item(self, *_):
         item_dict = self.item.__dict__
-        print("hhhhhhhhhh")
         # iterate and display the keys and values
-        cb = CheckBox(
-            size_hint=(None, None),
-            size=(30, 30),
-            pos_hint={"center_y":0.5}
-        )
-        def on_checkbox_active(checkbox, value):
-            print("Checked:", value)
-            if value:
-                self.control_list("add", self.item)
-            else:
-                self.control_list("remove", self.item)
+        if self.check_box:
+            cb = CheckBox(
+                size_hint=(None, None),
+                size=(30, 30),
+                pos_hint={"center_y":0.5}
+            )
+            def on_checkbox_active(checkbox, value):
+                print("Checked:", value)
+                if value:
+                    self.control_list("add", self.item)
+                else:
+                    self.control_list("remove", self.item)
 
-        cb.bind(active=on_checkbox_active)
-        self.add_widget(cb)
+            cb.bind(active=on_checkbox_active)
+            self.add_widget(cb)
         for key, value in item_dict.items():
             if type(value) == list or key=="_id" or key=="_load":
                 continue

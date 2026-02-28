@@ -16,7 +16,6 @@ class MCListItem(BoxLayout):
     include_button = BooleanProperty(True)
     def on_item(self, *_):
         item_dict = self.item.__dict__
-        print("hhhhhhhhhh")
         button = IconButton(image_path="src/assets/delete.png", size_hint=(None, None), base_width=60, base_height=60)
         def control(self):
             self.parent.control(self.parent.item)
@@ -29,7 +28,6 @@ class MCListItem(BoxLayout):
             c.add_widget(Label(text=f'{key[1:]} : {value}'))
             
             self.add_widget(c)
-        print("i am going to include a button", self.include_button)
         if self.include_button:
             self.add_widget(button)
         

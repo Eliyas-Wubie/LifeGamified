@@ -18,21 +18,16 @@ class AttributesContentArea(BoxLayout):
     def test(self):
         print("test")
     def on_visible(self, *_):
-        print("____________about tao call clock")
         Clock.schedule_once(self._load_data)
     def _load_data(self, *_):
         app = App.get_running_app()
         self.attributes = app.daily_report_controller.get_attributes() 
-        print("___________________ _load_data 🐱‍🐉🐱‍🐉🐱‍🐉", self.attributes)
     def switch_to_selector(self):
-        print("hey")
         self.ids.sm.current = "selector"
     def switch_to_detail(self, area):
         # filter the attributes by the part only. rename part (mind, spirit, body)
         self.visible_attributes=[]
-        print("switched to detail")
         for item in self.attributes:
-            print("working with attribute", item.name, area)
             if item.area == area:
                 self.visible_attributes.append(item)
         self.ids.sm.current = "detail"

@@ -16,22 +16,18 @@ class MissionCenter(BoxLayout):
     add_form=BooleanProperty(False) # type: ignore
     missions=ListProperty([]) # type: ignore
     def on_add_form(self, *_):
-        print("switching form ", self.add_form)
         self.ids.sm.current = "form" if self.add_form else "list"
     def search(self, search_string):
-        print("searching", search_string)
         if search_string == "":
             self.ids.list.items = self.missions
             return
         new_mission=[]
         for mission in self.missions:
-            print(mission.name, mission.description)
             if search_string in mission.name or (mission.description and search_string in mission.description):
                 new_mission.append(mission)
         self.ids.list.items = new_mission
     def delete(self, item):
         app = App.get_running_app()
-        print("___________________ deleting")
         app.daily_report_controller.delete_mission(item) 
         new_mission=[]
         for mission in self.missions:
@@ -40,18 +36,16 @@ class MissionCenter(BoxLayout):
         self.ids.list.items = new_mission
         self.missions = new_mission
     def on_missions(self, *_):
-        print("mission updated", self.missions)
+        pass
     def mission_control(self, action, item):
         if action == "add":
             self.completed_missions.append(item)
         elif action == "remove":
             self.completed_missions.remove(item)
     def on_visible(self, *_):
-        print("____________about tao call clock")
         Clock.schedule_once(self._load_data)
     def _load_data(self, *_):
         app = App.get_running_app()
-        print("___________________ _load_data")
         self.missions = app.daily_report_controller.get_missions() 
     
     
@@ -74,7 +68,6 @@ class MissionCenter(BoxLayout):
             if day == "Day":
                 day=datetime.now().day
             date_str = f"{year}-{month}-{day}"
-            print(date_str)
             deadline = datetime.strptime(date_str, "%Y-%m-%d")
         data = {
             "name":name,

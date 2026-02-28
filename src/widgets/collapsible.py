@@ -9,5 +9,5 @@ class Collapsible(BoxLayout):
     expanded = BooleanProperty(False)
     
     def on_expanded(self, *args):
-        print("This is bull shit")
+        print("expanded")
     

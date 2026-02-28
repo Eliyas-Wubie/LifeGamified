@@ -17,16 +17,12 @@ class ScrollableList(ScrollView):
     container=ObjectProperty(None)
     include_button=BooleanProperty(True)
     def on_kv_post(self, *_):
-        print("this is on kv post on list")
-        # self.add_widget(self.container)
-        # self.height = 300
         self.do_scroll_x = False
         self.do_scroll_y = True
     def on_include_button(self, *_):
         print("include button set to 🌟🌟🌟🌟", self.include_button)
         
     def on_items(self, *_):
-        print("on items executing", self.items)
         if not self.container:
             self.container = BoxLayout(orientation="vertical", size_hint_y=None)        
             self.container.bind(minimum_height=self.container.setter("height"))

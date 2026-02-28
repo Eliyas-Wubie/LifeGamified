@@ -43,7 +43,6 @@ class MyApp(App):
         sm.add_widget(HomeScreen(name="home")) # type: ignore
         sm.add_widget(SetupScreen(name="setup")) # type: ignore
         profile = self.status_controller.get_profile()
-        print("x.", profile)
         if profile:
             sm.current = "home"
         else:
@@ -52,7 +51,6 @@ class MyApp(App):
         return sm
     def on_pre_enter(self): # type: ignore
         # fetch necessary data
-        print("Pre App loaded 🌀🌀🌀🌀")
         self.profile = self.status_controller.get_profile()
 
 

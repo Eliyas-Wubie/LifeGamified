@@ -15,7 +15,7 @@ class ReportListItem(BoxLayout):
     include_button = BooleanProperty(True)
     def on_item(self, *_):
         item_dict = self.item.__dict__
-        button = IconButton(image_path="src/assets/attr.png", size_hint=(None, None), base_width=20, base_height=20)
+        button = IconButton(image_path="src/assets/open.png", size_hint=(None, None), base_width=60, base_height=60)
         def control(self):
             self.parent.control(self.parent.item)
         button.bind(on_press = control)

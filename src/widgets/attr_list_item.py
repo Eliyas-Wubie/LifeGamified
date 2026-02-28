@@ -20,15 +20,10 @@ class AttributeListItem(BoxLayout):
             self.parent.control(self.parent.item)
         button.bind(on_press = control)
         
-        # for key, value in item_dict.items():
-        #     if type(value) == list or key=="_id" or key=="_load":
-        #         continue
-        print(item_dict)
         c=BoxLayout(orientation= "horizontal")
         c.add_widget(Label(text=f'{item_dict.get("_name")} : {item_dict.get("_current_value")}'))
 
         self.add_widget(c)
-        print("i am going to include a button", self.include_button)
         if self.include_button:
             self.add_widget(button)
         

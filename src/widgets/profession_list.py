@@ -22,25 +22,11 @@ class ProfessionList(BoxLayout):
                     self.recursive_push(children.children[i].children, item)
 
     def on_professions(self, *_):
-        print("💈💈🌟🌟💈💈", self.professions)
         for item in self.professions:
             if not item.parent:
                 item_widget = ProfessionListItem()
                 item_widget.title = item.name
                 self.add_widget(item_widget)
             else:
-                print("🚒🚒🚒🚒", self.children) # Perfect now make this recursive
                 self.recursive_push(self.children, item)
-                # for children in self.children:
-                #     for i in range(len(children.children)):
-                #         if isinstance(children.children[i], Label) and children.children[i].text == item.parent.name:
-                #             print("parent match")
-                #             item_widget = ProfessionListItem()
-                #             item_widget.title = item.name
-                #             for c in children.children:
-                #                 if isinstance(c, BoxLayout):
-                #                     c.add_widget(item_widget)
-                #         else:
-                #             print("nop no parent match")
-        
     

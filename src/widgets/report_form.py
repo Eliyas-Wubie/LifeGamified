@@ -63,11 +63,9 @@ class ReportForm(BoxLayout):
             self.todays_accomplishments.remove(item)
 
     def on_visible(self, *_):
-        print("____________about tao call clock")
         Clock.schedule_once(self._load_data)
     def _load_data(self, *_):
         app = App.get_running_app()
-        print("___________________ _load_data")
         self.missions = app.daily_report_controller.get_missions()
         self.daily_activities = app.daily_report_controller.get_daily_activities()
         self.uncomfortable_activities = app.daily_report_controller.get_uncomfortable_activities()
@@ -76,7 +74,6 @@ class ReportForm(BoxLayout):
 
     
     def submit_form(self):
-        print("submit called")
         data ={ # type: ignore
             "completed_missions": self.completed_missions,
             "done_daily_activities":self.done_daily_activities,

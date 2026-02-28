@@ -37,14 +37,7 @@
                 base_width: 250 if not root.add_form else 230
                 base_height: 60
                 hover_enabled: False
-            # Button:
-            #     text: "Add new mission" if not root.add_form else "back to list"
-            #     size_hint_y: None
-            #     height: 60
-            #     on_press: root.add_form = not root.add_form
-            #     pos_hint: {"center_y":0.5}
-            #     background_normal: "src/assets/add_mission.png"
-            #     background_down: "src/assets/add_mission.png"
+
 
             Widget:
         ScreenManager:
@@ -151,7 +144,6 @@
                             Spinner:
                                 text: "Year"
                                 values: [str(y) for y in range(2020, 2031)]
-                                on_text: print("Selected year:", self.text)
                                 background_normal: "src/assets/spinner.png"
                                 background_down: "src/assets/spinner.png"
                                 border: 0, 0, 0, 0
@@ -160,7 +152,6 @@
                             Spinner:
                                 text: "Month"
                                 values: [str(m) for m in range(1, 13)]
-                                on_text: print("Selected year:", self.text)
                                 background_normal: "src/assets/spinner.png"
                                 background_down: "src/assets/spinner.png"
                                 border: 0, 0, 0, 0
@@ -169,7 +160,6 @@
                             Spinner:
                                 text: "Day"
                                 values: [str(d) for d in range(1, 32)]
-                                on_text: print("Selected year:", self.text)
                                 background_normal: "src/assets/spinner.png"
                                 background_down: "src/assets/spinner.png"
                                 border: 0, 0, 0, 0

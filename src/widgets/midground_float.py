@@ -17,7 +17,6 @@ class MidGroundFloat(FloatLayout):
     current_content=StringProperty("stats") # type: ignore
     local_list = ListProperty([]) # type: ignore
     def set_current_content(self, data, local_list): # type: ignore
-        print("parent called", local_list) # type: ignore
         # self.current_content = data # type: ignore
         # self.local_list=local_list # type: ignore
         self.ids.sm.current = data

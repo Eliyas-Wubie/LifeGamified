@@ -19,15 +19,11 @@ class StatsContentArea(BoxLayout):
 
     def on_size(self, *_):
         self.is_desktop = self.width > 800 # type: ignore
-        print(self.is_desktop) # type: ignore
     def set_control_display(self, display): # type: ignore
-        print("changing control 🌟🙌", display) # type: ignore
         self.control_display = display # type: ignore
         if display=="report":
             self.report_widget.visible = True
-            print("mounting report 🎶🎶🎶")
             self.ids.report.add_widget(self.report_widget)
-            print("🤳🤳🤳🤳🤳", self.ids.report.children)
             
         elif display=="mission":
             self.mission_center.visible = True
@@ -36,15 +32,11 @@ class StatsContentArea(BoxLayout):
             self.compound_activity_center.visible = True
             self.ids.compound_activity.add_widget(self.compound_activity_center)
         else:
-            print("removing current display ----")
             if self.report_widget in self.ids.report.children:
-                print("removing report")
                 self.ids.report.remove_widget(self.report_widget)
             elif self.mission_center in self.ids.mission.children:
-                print("removing mission")
                 self.ids.mission.remove_widget(self.mission_center)
             elif self.compound_activity_center in self.ids.compound_activity.children:
-                print("removing compound activity")
                 self.ids.compound_activity.remove_widget(self.compound_activity_center)
     def test(self):
         print("test")
@@ -57,14 +49,11 @@ class StatsContentArea(BoxLayout):
         
         
     def handle_report_submit(self,form, data): # type: ignore
-        print("handle_report_submit")
         app=App.get_running_app() # type: ignore
         app.daily_report_controller.make_a_report(data) # type: ignore
     def handle_mission_submit(self,form, data): # type: ignore
-        print("handle_mission_submit")
         app=App.get_running_app() # type: ignore
         app.daily_report_controller.create_mission(data) # type: ignore
     def handle_compound_activity_submit(self,form, data): # type: ignore
-        print("handle_mission_submit")
         app=App.get_running_app() # type: ignore
         app.daily_report_controller.create_compound_activity(data) # type: ignore

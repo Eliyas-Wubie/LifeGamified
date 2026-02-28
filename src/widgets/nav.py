@@ -11,7 +11,6 @@ Builder.load_file("src/kv/widgets/nav.kv") # type: ignore
 class Nav(BoxLayout):
     # offset=NumericProperty(0) # type: ignore
     def set_control(self, data): # type: ignore
-        print("called with", data) # type: ignore
         app: MyApp = App.get_running_app() # type: ignore
         local_list=app.report_controller.get_reports()
         # local_list=[{"date":datetime.now()}]

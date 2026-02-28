@@ -235,8 +235,7 @@ def control_accomplishment_attribute_link(
         ]
         return domain
     else:
-        print("invalid control")
-
+        pass
     # get both the orms, get the id for both
     # remove the association
 
@@ -289,7 +288,7 @@ def control_accomplishment_profession_link(
         ]
         return domain
     else:
-        print("invalid control")
+        pass
 
 
 def control_accomplishment_mission_link(
@@ -333,7 +332,7 @@ def control_accomplishment_mission_link(
         ]
         return domain
     else:
-        print("invalid control")
+        pass
 
 
 def control_accomplishment_title_link(
@@ -375,7 +374,7 @@ def control_accomplishment_title_link(
         ]
         return domain
     else:
-        print("invalid control")
+        pass
 
 
 def delete_accomplishment(domain: Accomplishment):

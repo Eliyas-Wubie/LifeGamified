@@ -7,7 +7,6 @@ from src.models.domain.profession import Profession
 from datetime import datetime
 
 def get_missions():
-    print("controller for daily called")
     mission= Mission("name")
     mission2= Mission("name2")
     mission3= Mission("name3", "hahalu")
@@ -16,17 +15,13 @@ def get_missions():
     return [mission, mission2,mission3, mission4, mission, mission2,mission3, mission4, mission, mission2,mission3, mission4, mission, mission2,mission3, mission4, mission, mission2,mission3, mission4, mission, mission2,mission3, mission4 ]
 
 def delete_mission(item):
-    print("deleting mission", item)
-
+    pass
 def create_mission(data):
-    print("create mission", data)
-
+    pass
 def delete_compound_activity(item):
-    print("deleting mission", item)
-
+    pass
 def create_compound_activity(data):
-    print("create mission", data)
-
+    pass
 def get_attributes():
     a1=Attribute("positivity", "mind")
     a2=Attribute("activeness", "mind")
@@ -52,7 +47,6 @@ def get_professions():
     return [p1,p2,p3,p4,p5,p6, p7, p8, p9,p10, p11]
 
 def get_compound_activities():
-    print("controller for daily called")
     compound_activity= CompoundActivity("name", 11)
     compound_activity2= CompoundActivity("name2", 12)
     compound_activity3= CompoundActivity("name3", 1)
@@ -73,33 +67,28 @@ def get_daily_reports():
     compound_activity4= DailyReport(datetime.now())
     return [compound_activity, compound_activity2, compound_activity3, compound_activity4]
 def get_daily_activities():
-    print("controller for daily called")
     compoundActivity= CompoundActivity("name", 10)
     compoundActivity2= CompoundActivity("name2", 10)
     compoundActivity3= CompoundActivity("name3", 10)
     compoundActivity4= CompoundActivity("name4", 10)
     return [compoundActivity, compoundActivity2,compoundActivity3, compoundActivity4 ]
 def get_uncomfortable_activities():
-    print("controller for daily called")
     compoundActivity= CompoundActivity("name", 10)
     compoundActivity2= CompoundActivity("name2", 10)
     compoundActivity3= CompoundActivity("name3", 10)
     compoundActivity4= CompoundActivity("name4", 10)
     return [compoundActivity, compoundActivity2,compoundActivity3, compoundActivity4 ]
 def get_generic_activities():
-    print("controller for daily called")
     compoundActivity= CompoundActivity("name", 10)
     compoundActivity2= CompoundActivity("name2", 10)
     compoundActivity3= CompoundActivity("name3", 10)
     compoundActivity4= CompoundActivity("name4", 10)
     return [compoundActivity, compoundActivity2,compoundActivity3, compoundActivity4 ]
 def get_accomplishments():
-    print("controller for daily called")
     accomplishment= Accomplishment("name", 5, "disc")
     accomplishment2= Accomplishment("name2", 5, "disc")
     accomplishment3= Accomplishment("name3", 5, "disc")
     accomplishment4= Accomplishment("name4", 5, "disc")
     return [accomplishment, accomplishment2,accomplishment3, accomplishment4 ]
 
-def make_a_report(data):
-    print("i am called 🎌🎌🎌", data)
+def make_a_report(data):    pass

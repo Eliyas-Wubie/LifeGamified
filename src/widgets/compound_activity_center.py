@@ -18,22 +18,18 @@ class CompoundActivityCenter(BoxLayout):
     form_xp = NumericProperty(None)
     
     def on_add_form(self, *_):
-        print("switching form ", self.add_form)
         self.ids.sm.current = "form" if self.add_form else "list"
     def search(self, search_string):
-        print("searching", search_string)
         if search_string == "":
             self.ids.list.items = self.compound_activities
             return
         new_compound_activities=[]
         for compound_activities in self.compound_activities:
-            print(compound_activities.name)
             if search_string in compound_activities.name:
                 new_compound_activities.append(compound_activities)
         self.ids.list.items = new_compound_activities
     def delete(self, item):
         app = App.get_running_app()
-        print("___________________ deleting")
         app.daily_report_controller.delete_compound_activity(item) 
         new_compound_activities=[]
         for compound_activity in self.compound_activities:
@@ -49,11 +45,9 @@ class CompoundActivityCenter(BoxLayout):
         elif action == "remove":
             self.completed_compound_activities.remove(item)
     def on_visible(self, *_):
-        print("____________about tao call clock")
         Clock.schedule_once(self._load_data)
     def _load_data(self, *_):
         app = App.get_running_app()
-        print("___________________ _load_data")
         self.compound_activities = app.daily_report_controller.get_compound_activities() 
     
     
@@ -63,7 +57,6 @@ class CompoundActivityCenter(BoxLayout):
             "name": self.form_name,
             "xp":self.form_xp,
         }
-        print("submit called", data)
         self.dispatch("on_compound_activity_form_submit", data) # type: ignore
     def on_compound_activity_form_submit(self, data): # type: ignore
         pass

@@ -128,7 +128,6 @@ def evaluate_xp_rate() -> float | None:
     
 
 def create_player(name:str) -> Status | None:
-    print("name",name)
     domain = Status(name)
     orm = create_status_orm(domain)
     session.add(orm)

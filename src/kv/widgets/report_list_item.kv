@@ -1,2 +1,9 @@
 #:kivy 2.3.0
 <ReportListItem>:
+    canvas.before:
+        Color:
+            rgba: 1,1,1,1
+        Rectangle:
+            source: "src/assets/row-i.png"
+            pos: self.pos
+            size: self.size
