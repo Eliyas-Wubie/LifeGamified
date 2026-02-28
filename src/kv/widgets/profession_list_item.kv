@@ -1,2 +1,15 @@
 #:kivy 2.3.0
-<ProfessionsListItem>:
+<ProfessionListItem>:
+    padding:10
+    canvas.before:
+        Color:
+            rgba: 0, 0.7, 1, 1  # Red color with full opacity
+        # Draw the rectangle outline
+        Line:
+            rectangle: (self.x, self.y, self.width, self.height)  # Outline around the box
+            width: 1  # Thickness of the outline
+        Color:
+            rgba: 0, 0, 0, 0.5  # Red color with full opacity
+        Rectangle:
+            pos: self.pos
+            size: self.size

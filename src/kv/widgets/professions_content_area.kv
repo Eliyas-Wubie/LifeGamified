@@ -4,9 +4,9 @@
         orientation: "vertical"
         canvas.before:
             Color:
-                rgba: 1,1,1,0.75
+                rgba: 1,1,1,0.9
             RoundedRectangle:
-                source: "src/assets/grid3.jpg"
+                source: "src/assets/grid-i.png"
                 pos: self.pos
                 size: self.size
                 radius:[20]
@@ -23,9 +23,17 @@
             BoxLayout:
                 id: world
                 size_hint: None, None
-                size: root.width, root.height
+                size: root.width-100, root.height-100
                 pos: (scatter.width - self.width)/2, (scatter.height - self.height)/2
                 orientation: "vertical"
+                canvas.before:
+                    # Set the color of the outline (RGBA format)
+                    Color:
+                        rgba: 0, 0.5, 1, 1  # Red color with full opacity
+                    # Draw the rectangle outline
+                    Line:
+                        rectangle: (self.x, self.y, self.width, self.height)  # Outline around the box
+                        width: 3  # Thickness of the outline
                 ProfessionList:
                     professions: root.professions
                     visible: True

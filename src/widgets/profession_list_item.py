@@ -14,4 +14,5 @@ class ProfessionListItem(BoxLayout):
         self.add_widget(Title)
         Container=BoxLayout()
         self.add_widget(Container)
+        print("on title has run")
     

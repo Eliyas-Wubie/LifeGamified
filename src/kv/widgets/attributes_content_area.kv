@@ -6,28 +6,37 @@
             name: "selector"
             BoxLayout:
                 orientation:"vertical"
-                size_hint: 0.6, 0.8
+                size_hint: 0.5, 0.7
                 pos_hint: {"center_x":0.5, "center_y": 0.5}
                 BoxLayout:
                     orientation:"horizontal"
                     Widget:
-                    Button:
-                        text:"Mind"
+                    IconButton:
                         on_press: root.switch_to_detail("mind")
+                        image_path: "src/assets/mind.png"
+                        hover_enabled: False
                     Widget:
                 BoxLayout:
                     orientation:"horizontal"
-                    Button:
-                        text:"Body"
+                    IconButton:
                         on_press: root.switch_to_detail("body")
+                        image_path: "src/assets/body.png"
+                        hover_enabled: False
                     Widget:
-                    Button:
-                        text:"Spirit"
+                    IconButton:
                         on_press: root.switch_to_detail("spirit")
+                        image_path: "src/assets/spirit.png"
+                        hover_enabled: False
         Screen:
             name: "detail"
             BoxLayout:
                 orientation: "vertical"
+                canvas.before:
+                    Color:
+                        rgba: 0,0,0,0.8
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
                 BoxLayout:
                     size_hint_y: None
                     height: 54
@@ -36,7 +45,7 @@
                         size_hint_x: None
                         width: 40
                     IconButton:
-                        image_path: "src/assets/back.png"
+                        image_path: "src/assets/back-i.png"
                         size_hint: None, None
                         base_width: 30
                         base_height: 30
@@ -44,12 +53,7 @@
                     Widget:
                 BoxLayout:
                     size_hint: 1,1
-                    canvas.before:
-                        Color:
-                            rgba: 1,0,0,1
-                        Rectangle:
-                            pos: self.pos
-                            size: self.size
+
                     Widget:
                     BoxLayout:
                         id: list
@@ -60,13 +64,17 @@
                         pos_hint: {"center_x": 0.5, "center_y":0.5}
                         canvas.before:
                             Color:
-                                rgba: 1,0,1,1
-                            Rectangle:
+                                rgba: 1,1,1,0.9
+                            RoundedRectangle:
+                                source: "src/assets/unlabled-area.png"
                                 pos: self.pos
                                 size: self.size
+                                radius:[20]
+                        Widget:
                         ScrollableList:
                             id: list
                             include_button: False
                             items: root.visible_attributes
                             item_widget: "attr"
+                        Widget:
                     Widget:
