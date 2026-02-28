@@ -24,12 +24,13 @@
                 padding: [10,10]
                 multiline: False
             Widget:
-            Button:
-                text: "Add Activity" if not root.add_form else "back to list"
-                size_hint_y: None
-                height: 50
+            IconButton:
                 on_press: root.add_form = not root.add_form
-                background_normal: "src/assets/grid2.jpg"
+                image_path: "src/assets/add_activity.png" if not root.add_form else "src/assets/list.png"
+                size_hint: None, None
+                base_width: 250 if not root.add_form else 230
+                base_height: 60
+                hover_enabled: False
             Widget:
         ScreenManager:
             id: sm
@@ -103,12 +104,17 @@
                         #     padding: [10,10]
                         #     multiline: False
                     Widget:
-                    Button:
-                        text:"submit"
-                        size_hint_y: None
-                        height: 80
-                        background_normal: "src/assets/grid2.jpg"
-                        on_press: root.submit()
+                    BoxLayout:
+                        Widget:
+                        IconButton:
+                            image_path: "src/assets/submit.png"
+                            base_height: 80
+                            base_width: 300
+                            size_hint: None, None
+                            width:300
+                            height:80
+                            on_press: root.submit()
+                        Widget:
                         
         # Widget:
         #     minimum_height:0

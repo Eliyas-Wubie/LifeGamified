@@ -27,7 +27,6 @@ class ScrollableList(ScrollView):
         
     def on_items(self, *_):
         print("on items executing", self.items)
-        
         if not self.container:
             self.container = BoxLayout(orientation="vertical", size_hint_y=None)        
             self.container.bind(minimum_height=self.container.setter("height"))
@@ -46,8 +45,9 @@ class ScrollableList(ScrollView):
             i.include_button = self.include_button
             i.item = item
             i.control = self.control
-            i.padding = 30
+            # i.padding = 30
     
             # i.control_list=self.control
             self.container.add_widget(i)
+            self.container.add_widget(Widget(size_hint_y=None, height=10))
             

@@ -14,13 +14,14 @@
                 orientation: "vertical"
                 padding:[10, 100]
                 size_hint: None, None
-                width: 300
+                width: 450
                 height: 600
                 pos_hint: {"center_x":0.5, "center_y": 0.5}
                 canvas.before:
                     Color:
-                        rgba: 0,0,0,0.8
+                        rgba: 1,1,1,0.9
                     RoundedRectangle:
+                        source: "src/assets/status-window.png"
                         pos: self.pos
                         size: self.size
                         radius:[20]
@@ -117,23 +118,26 @@
                             pos_hint: {"center_x": 0.5}
                             IconButton:
                                 hover_enabled: False
-                                image_path: "src/assets/mission.png"
+                                image_path: "src/assets/mission-i.png"
                                 size_hint: None, None
-                                size: 40, 40
+                                base_height: 40
+                                base_width:120
                                 on_press: root.set_control_display("mission") #REPORT
                             Widget:
                             IconButton:
                                 hover_enabled: False
-                                image_path: "src/assets/activity.png"
+                                image_path: "src/assets/activity-i.png"
                                 size_hint: None, None
-                                size: 40, 40 
+                                base_height: 40
+                                base_width:120
                                 on_press: root.set_control_display("compound_activity")
                             Widget:
                             IconButton:
                                 hover_enabled: False
-                                image_path: "src/assets/report2.png"
+                                image_path: "src/assets/report2-i.png"
                                 size_hint: None, None
-                                size: 40, 40
+                                base_height: 45
+                                base_width:150
                                 on_press: root.set_control_display("report")
         
         BoxLayout:  # conditional content - mission
@@ -160,7 +164,7 @@
                     width: 50
                 IconButton:
                     on_press: root.set_control_display("")
-                    image_path: "src/assets/back.png"
+                    image_path: "src/assets/back-i.png"
                     size_hint: None, None
                     # size: 20, 20
                     base_width: 30
@@ -192,7 +196,7 @@
                     width: 50
                 IconButton:
                     on_press: root.set_control_display("")
-                    image_path: "src/assets/back.png"
+                    image_path: "src/assets/back-i.png"
                     size_hint: None, None
                     # size: 20, 20
                     base_width: 30
@@ -223,7 +227,7 @@
                     width: 50
                 IconButton:
                     on_press: root.set_control_display("")
-                    image_path: "src/assets/back.png"
+                    image_path: "src/assets/back-i.png"
                     size_hint: None, None
                     # size: 20, 20
                     base_width: 30

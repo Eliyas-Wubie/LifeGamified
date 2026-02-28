@@ -1,20 +1,20 @@
 #:kivy 2.3.0
 <Nav>:
     orientation: "horizontal"
-    canvas.before:
-        Color:
-            rgba: 0,0,0,0.8
-        RoundedRectangle:
-            pos: self.pos
-            size: self.size
-            radius: [10]
+    # canvas.before:
+    #     Color:
+    #         rgba: 0,0,0,0.8
+    #     RoundedRectangle:
+    #         pos: self.pos
+    #         size: self.size
+    #         radius: [10]
     size_hint_y: None
     height: 70
     padding: [10,6]
     IconButton:
-        image_path: "src/assets/settings.png"
+        image_path: "src/assets/settings-i.png"
         size_hint: None, None
-        base_width: 60
+        base_width: 220
         base_height: 60
         hover_enabled: False
         on_press: root.set_control("settings")
@@ -23,25 +23,32 @@
         orientation: "horizontal"
         size_hint_min_x: dp(140)
         IconButton:
-            image_path: "src/assets/home.png"
+            image_path: "src/assets/home-i.png"
             size_hint: None, None
+            base_width:130
+            base_height:40
             on_press: root.set_control("stats")
         Widget:
         IconButton:
-            image_path: "src/assets/report.png"
+            image_path: "src/assets/report-i.png"
             size_hint: None, None
+            base_width:120
+            base_height:55
             on_press: root.set_control("reports")
         Widget:
         IconButton:
-            image_path: "src/assets/attr.png"
-
+            image_path: "src/assets/attr-i.png"
             size_hint: None, None
+            base_width:140
+            base_height:50
             on_press: root.set_control("attributes")
 
         Widget:
         IconButton:
-            image_path: "src/assets/tree.png"
+            image_path: "src/assets/tree-i.png"
             size_hint: None, None
+            base_width:140
+            base_height:50
             on_press: root.set_control("professions")
 
 

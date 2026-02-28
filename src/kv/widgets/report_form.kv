@@ -21,19 +21,22 @@
                     expanded: False
                     BoxLayout: # control
                         size_hint_y:None
-                        height: 80
+                        height: 60
                         canvas.before:
                             Color:
-                                rgba: 0,0,0.1,1
+                                rgba: 1,1,1,1
                             Rectangle:
+                                source: "src/assets/row-i.png"
                                 pos: self.pos
                                 size: self.size
                         Label:
                             text:"Missions"
                         IconButton:
-                            image_path: "src/assets/dropdown.png"
+                            image_path: "src/assets/collapsed.png" if not self.parent.parent.expanded else "src/assets/expanded.png"
                             size_hint: None, None
-                            size: 20, 20
+                            size: 60, 60
+                            base_height: 60
+                            base_width: 60
                             hover_enabled: False
                             on_press: self.parent.parent.expanded = not self.parent.parent.expanded
                         Widget:
@@ -57,24 +60,30 @@
                             orientation:"vertical"
                             items: root.missions
                             control: root.mission_control
+                Widget:
+                    size_hint_y: None
+                    height:10
                 Collapsible:
                     orientation:"vertical"
                     expanded: False
                     BoxLayout: # control
                         size_hint_y:None
-                        height: 80
+                        height: 60
                         canvas.before:
                             Color:
-                                rgba: 0,0,0.1,1
+                                rgba: 1,1,1,1
                             Rectangle:
+                                source: "src/assets/row-i.png"
                                 pos: self.pos
                                 size: self.size
                         Label:
                             text:"Daily Activities"
                         IconButton:
-                            image_path: "src/assets/dropdown.png"
+                            image_path: "src/assets/collapsed.png" if not self.parent.parent.expanded else "src/assets/expanded.png"
                             size_hint: None, None
-                            size: 20, 20
+                            size: 60, 60
+                            base_height: 60
+                            base_width: 60
                             hover_enabled: False
                             on_press: self.parent.parent.expanded = not self.parent.parent.expanded
                         Widget:
@@ -98,24 +107,30 @@
                             orientation:"vertical"
                             items: root.daily_activities
                             control: root.daily_activities_control
+                Widget:
+                    size_hint_y: None
+                    height:10
                 Collapsible:
                     orientation:"vertical"
                     expanded: False
                     BoxLayout: # control
                         size_hint_y:None
-                        height: 80
+                        height: 60
                         canvas.before:
                             Color:
-                                rgba: 0,0,0.1,1
+                                rgba: 1,1,1,1
                             Rectangle:
+                                source: "src/assets/row-i.png"
                                 pos: self.pos
                                 size: self.size
                         Label:
                             text:"Uncomfortable Activities"
                         IconButton:
-                            image_path: "src/assets/dropdown.png"
+                            image_path: "src/assets/collapsed.png" if not self.parent.parent.expanded else "src/assets/expanded.png"
                             size_hint: None, None
-                            size: 20, 20
+                            size: 60, 60
+                            base_height: 60
+                            base_width: 60
                             hover_enabled: False
                             on_press: self.parent.parent.expanded = not self.parent.parent.expanded
                         Widget:
@@ -139,24 +154,30 @@
                             orientation:"vertical"
                             items: root.uncomfortable_activities
                             control: root.uncomfortable_activities_control
+                Widget:
+                    size_hint_y: None
+                    height:10
                 Collapsible:
                     orientation:"vertical"
                     expanded: False
                     BoxLayout: # control
                         size_hint_y:None
-                        height: 80
+                        height: 60
                         canvas.before:
                             Color:
-                                rgba: 0,0,0.1,1
+                                rgba: 1,1,1,1
                             Rectangle:
+                                source: "src/assets/row-i.png"
                                 pos: self.pos
                                 size: self.size
                         Label:
                             text:"Generic Activities"
                         IconButton:
-                            image_path: "src/assets/dropdown.png"
+                            image_path: "src/assets/collapsed.png" if not self.parent.parent.expanded else "src/assets/expanded.png"
                             size_hint: None, None
-                            size: 20, 20
+                            size: 60, 60
+                            base_height: 60
+                            base_width: 60
                             hover_enabled: False
                             on_press: self.parent.parent.expanded = not self.parent.parent.expanded
                         Widget:
@@ -180,25 +201,31 @@
                             orientation:"vertical"
                             items: root.generic_activities
                             control: root.generic_activities_control
+                Widget:
+                    size_hint_y: None
+                    height:10
                 Collapsible:
                     orientation:"vertical"
                     expanded: False
                     # disabled: not root.visible
                     BoxLayout: # control
                         size_hint_y:None
-                        height: 80
+                        height: 60
                         canvas.before:
                             Color:
-                                rgba: 0,0,0.1,1
+                                rgba: 1,1,1,1
                             Rectangle:
+                                source: "src/assets/row-i.png"
                                 pos: self.pos
                                 size: self.size
                         Label:
                             text:"Accomplishments"
                         IconButton:
-                            image_path: "src/assets/dropdown.png"
+                            image_path: "src/assets/collapsed.png" if not self.parent.parent.expanded else "src/assets/expanded.png"
                             size_hint: None, None
-                            size: 20, 20
+                            size: 60, 60
+                            base_height: 60
+                            base_width: 60
                             hover_enabled: False
                             on_press: self.parent.parent.expanded = not self.parent.parent.expanded
                         Widget:
@@ -229,10 +256,13 @@
             size_hint_y: None
             height: 80
             Widget:
-            Button:
-                text: "Report"
-                size_hint_y: None
-                height: 50
+            IconButton:
+                image_path: "src/assets/report-ii.png"
+                size_hint: None, None
+                base_height:50
+                base_width:200
+                height:50
+                width:200
                 on_press: root.submit_form()
             Widget:
 
