@@ -1,0 +1,15 @@
+[
+    { "name": "clarity", "area": "mind", "custom": false },
+    { "name": "memory", "area": "mind", "custom": false },
+    { "name": "thinking", "area": "mind", "custom": false },
+    { "name": "imagination", "area": "mind", "custom": false },
+    { "name": "acceptance", "area": "spirit", "custom": false },
+    { "name": "activeness", "area": "spirit", "custom": false },
+    { "name": "bravery", "area": "spirit", "custom": false },
+    { "name": "trust", "area": "spirit", "custom": false },
+    { "name": "positivity", "area": "spirit", "custom": false },
+    { "name": "strength", "area": "body", "custom": false },
+    { "name": "flexibility", "area": "body", "custom": false },
+    { "name": "speed", "area": "body", "custom": false },
+    { "name": "appearance", "area": "body", "custom": false }
+]

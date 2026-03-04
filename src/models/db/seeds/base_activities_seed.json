@@ -1,0 +1,37 @@
+[
+    {
+        "name":"create",
+        "xp":100,
+        "activity_type":"base"
+    },
+    {
+        "name":"search",
+        "xp":100,
+        "activity_type":"base"
+    },
+    {
+        "name":"order",
+        "xp":100,
+        "activity_type":"base"
+    },
+    {
+        "name":"deduce",
+        "xp":100,
+        "activity_type":"base"
+    },
+    {
+        "name":"learn",
+        "xp":100,
+        "activity_type":"base"
+    },
+    {
+        "name":"experiance",
+        "xp":100,
+        "activity_type":"base"
+    },
+    {
+        "name":"other",
+        "xp":100,
+        "activity_type":"base"
+    }
+]

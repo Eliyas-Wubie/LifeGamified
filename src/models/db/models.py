@@ -160,8 +160,8 @@ class AttributeORM(TimestampMixin,Base):
     id: Mapped[int]=mapped_column(Integer, primary_key=True)
     name: Mapped[str]=mapped_column(String, nullable=False, unique=True)
     area:Mapped[str]=mapped_column(String, nullable=False)
-    custom:Mapped[bool]=mapped_column(Boolean, nullable=False)
-    current_value:Mapped[float]=mapped_column(Float, nullable=False)
+    custom:Mapped[bool]=mapped_column(Boolean, nullable=False, default=True)
+    current_value:Mapped[float]=mapped_column(Float, nullable=False, default=0.0)
     base_activities:Mapped[list["BaseActivityAttributeORM"]]=relationship(
         back_populates="attribute"
     )
