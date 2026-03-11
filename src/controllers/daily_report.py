@@ -4,6 +4,7 @@ from src.models.domain.accomplishment import Accomplishment
 from src.models.domain.daily_report import DailyReport
 from src.models.domain.status import Attribute
 from src.models.domain.profession import Profession
+from src.models.services import activity as activity_service
 from datetime import datetime
 
 def get_missions():
@@ -47,12 +48,7 @@ def get_professions():
     return [p1,p2,p3,p4,p5,p6, p7, p8, p9,p10, p11]
 
 def get_compound_activities():
-    compound_activity= CompoundActivity("name", 11)
-    compound_activity2= CompoundActivity("name2", 12)
-    compound_activity3= CompoundActivity("name3", 1)
-    compound_activity4= CompoundActivity("name4", 7)
-    
-    return [compound_activity, compound_activity2,compound_activity3, compound_activity4, compound_activity, compound_activity2,compound_activity3, compound_activity4, compound_activity, compound_activity2,compound_activity3, compound_activity4, compound_activity, compound_activity2,compound_activity3, compound_activity4, compound_activity, compound_activity2,compound_activity3, compound_activity4, compound_activity, compound_activity2,compound_activity3, compound_activity4 ]
+    return activity_service.view_compound_activities()
 
 
 def get_daily_reports():

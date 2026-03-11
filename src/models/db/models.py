@@ -54,6 +54,8 @@ class CompoundActivityORM(TimestampMixin,Base):
     name: Mapped[str] = mapped_column(String, nullable=False, unique=True)
     xp: Mapped[float] = mapped_column(Float, nullable=False)
     tags: Mapped[list[str]] = mapped_column(MutableList.as_mutable(JSON),default=list,)
+    custom: Mapped[bool] = mapped_column(Boolean, default=True)
+    hidden: Mapped[bool] = mapped_column(Boolean, default=False)
     base_activities: Mapped[list["BaseActivityCompoundActivityORM"]] = relationship(
         back_populates="compound_activity",
         cascade="all, delete-orphan"

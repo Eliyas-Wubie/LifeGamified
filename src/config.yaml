@@ -9,8 +9,10 @@ base_activities:
 
 valid_tags:
   - daily
-  - uncomfortable
+  - discomfort
   - generic
+  - negative
+  - uncomfortable
 
 valid_status:
   - locked

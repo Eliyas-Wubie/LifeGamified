@@ -1,0 +1,429 @@
+[
+    {
+        "name": "Rise Early",
+        "xp": 1700,
+        "tags": ["daily"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Pray",
+        "xp": 1700,
+        "tags": ["daily"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Technical Practice",
+        "xp": 1700,
+        "tags": ["daily"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Workout",
+        "xp": 2500,
+        "tags": ["daily"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Meditate",
+        "xp": 1700,
+        "tags": ["daily"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Plan the Day",
+        "xp": 1700,
+        "tags": ["daily"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Prepare Meals",
+        "xp": 1700,
+        "tags": ["daily"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Dress Well",
+        "xp": 1700,
+        "tags": ["daily"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Quality Work (Morning)",
+        "xp": 1700,
+        "tags": ["daily"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Speech Practice (Morning)",
+        "xp": 1700,
+        "tags": ["daily"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Stress Control (Morning)",
+        "xp": 1700,
+        "tags": ["daily"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Thought Discipline (Morning)",
+        "xp": 1700,
+        "tags": ["daily"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Money Research (Morning)",
+        "xp": 1700,
+        "tags": ["daily"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Work on Personal Projects (Morning)",
+        "xp": 1700,
+        "tags": ["daily"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Eat Lunch",
+        "xp": 1700,
+        "tags": ["daily"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Quality Work (Afternoon)",
+        "xp": 1700,
+        "tags": ["daily"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Speech Practice (Afternoon)",
+        "xp": 1700,
+        "tags": ["daily"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Stress Control (Afternoon)",
+        "xp": 1700,
+        "tags": ["daily"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Thought Discipline (Afternoon)",
+        "xp": 1700,
+        "tags": ["daily"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Money Research (Afternoon)",
+        "xp": 1700,
+        "tags": ["daily"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Work on Personal Projects (Afternoon)",
+        "xp": 1700,
+        "tags": ["daily"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Bureaucratic Task",
+        "xp": 50000,
+        "tags": ["discomfort"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Maintain Relationships",
+        "xp": 10000,
+        "tags": ["discomfort"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Demonization Work",
+        "xp": 50000,
+        "tags": ["discomfort"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Confront Someone",
+        "xp": 10000,
+        "tags": ["discomfort"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Control Flooding",
+        "xp": 10000,
+        "tags": ["discomfort"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Execute XSWAG",
+        "xp": 1000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Study",
+        "xp": 2000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Take Notes",
+        "xp": 1000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Use Deductive Skill",
+        "xp": 1000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Use Deductive Skill (Normal)",
+        "xp": 2000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Use Personal Gift",
+        "xp": 3000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Design Something",
+        "xp": 1000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Solve Problem",
+        "xp": 1000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Create Plan",
+        "xp": 1000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Organize Things",
+        "xp": 1000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Manage People",
+        "xp": 1000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Delegate Task",
+        "xp": 1000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Win Debate",
+        "xp": 2000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "1-on-1 Conversation",
+        "xp": 1000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Group Conversation",
+        "xp": 2000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Give Presentation",
+        "xp": 3000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Technical Hand Work",
+        "xp": 1000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Document Work",
+        "xp": 1000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Mini Project Work",
+        "xp": 3000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Major Project Work",
+        "xp": 5000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Complete Compound Task",
+        "xp": 1000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Research",
+        "xp": 1000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Act with Values",
+        "xp": 1000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Improve Image",
+        "xp": 1000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Maintain Good Posture",
+        "xp": 1000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Maintain Good Demeanor",
+        "xp": 1000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Use Time Well",
+        "xp": 1000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Use Energy Efficiently",
+        "xp": 1000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Wash Clothes",
+        "xp": 1000,
+        "tags": ["generic"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Emotional Flooding",
+        "xp": -10000,
+        "tags": ["negative"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Act Against Values",
+        "xp": -10000,
+        "tags": ["negative"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Break SWAG Rule",
+        "xp": -2000,
+        "tags": ["negative"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Be Lazy",
+        "xp": -5000,
+        "tags": ["negative"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Binge Entertainment",
+        "xp": -5000,
+        "tags": ["negative"],
+        "custom":false,
+        "hidden":false
+    },
+    {
+        "name": "Skip Workout",
+        "xp": -5000,
+        "tags": ["negative"],
+        "custom":false,
+        "hidden":false
+    }
+]

@@ -102,6 +102,7 @@ class CompoundActivity:
             missions: list["Mission"] | None = None
         ):
         compound_activity_policy=ActivityPolicy()
+        print("🚒🚒🚒", name)
         if not compound_activity_policy.is_valid_tag([] if tags is None else tags):
             raise ValueError("invalid tag")
         del compound_activity_policy
@@ -186,6 +187,8 @@ class ActivityPolicy:
         valid_tags = config.get("valid_tags")
         for tag in tags:
             if tag not in valid_tags:
+                print(tag, "🎌🎌🎶🎶")
+                input()
                 return False
         return True
     
