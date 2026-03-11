@@ -8,6 +8,8 @@ from src.controllers import report
 from src.controllers import status
 from src.controllers import daily_report
 from kivy.uix.screenmanager import NoTransition 
+from src.models.db.session import init_db
+
 
 # import screens so Kivy knows the classes
 from src.screens.home import HomeScreen
@@ -56,4 +58,5 @@ class MyApp(App):
 
 
 if __name__ == "__main__":
+    init_db()
     MyApp().run()
