@@ -26,4 +26,8 @@ def create_compound_activity(data: dict):
 
 
 def delete_compound_activity(item: CompoundActivity):
-    return activity_service.delete_compound_activity(item)
+    try:
+        activity_service.delete_compound_activity(item)
+        return True
+    except ValueError:
+        return False

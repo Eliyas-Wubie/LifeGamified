@@ -30,7 +30,9 @@ class CompoundActivityCenter(BoxLayout):
         self.ids.list.items = new_compound_activities
     def delete(self, item):
         app = App.get_running_app()
-        app.activity_controller.delete_compound_activity(item) 
+        deleted = app.activity_controller.delete_compound_activity(item) 
+        if not deleted:
+            return
         new_compound_activities=[]
         for compound_activity in self.compound_activities:
             if compound_activity.name != item.name:

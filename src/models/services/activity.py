@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from src.models.db.models import BaseActivityORM, CompoundActivityORM
 from src.models.db.session import SessionLocal
 from src.models.domain.activity import BaseActivity, CompoundActivity
+from src.utils.config import load_config
 
 if TYPE_CHECKING:
     from src.models.domain.activity import BaseActivity, CompoundActivity
@@ -151,6 +152,9 @@ def delete_basic_activity(domain: BaseActivity):
 
     with SessionLocal() as session:
         orm = activity_domain_to_orm(domain, session)
+        protected_names = set(load_config().get("base_activities", []))
+        if orm.name in protected_names or orm.activity_type != "other":
+            raise ValueError("Seeded base activities cannot be deleted")
         target_id = orm.id
         session.query(BaseActivityAttributeORM).filter(
             BaseActivityAttributeORM.base_activity_id == target_id
@@ -211,9 +215,15 @@ def view_compound_activities(
     with SessionLocal() as session:
         if not search:
             if tag is None:
-                compound_activities: Any = session.query(CompoundActivityORM).all()
+                compound_activities: Any = (
+                    session.query(CompoundActivityORM)
+                    .filter(CompoundActivityORM.hidden == False)
+                    .all()
+                )
             else:
-                compound_activities_unfiltered = session.query(CompoundActivityORM)
+                compound_activities_unfiltered = session.query(CompoundActivityORM).filter(
+                    CompoundActivityORM.hidden == False
+                )
                 compound_activities = compound_activities_unfiltered.filter(
                     CompoundActivityORM.tags.contains([tag])
                 )
@@ -222,11 +232,14 @@ def view_compound_activities(
         if tag is None:
             compound_activities = (
                 session.query(CompoundActivityORM)
+                .filter(CompoundActivityORM.hidden == False)
                 .filter(CompoundActivityORM.name.ilike(f"%{search}%"))
                 .all()
             )
         else:
-            compound_activities_unfiltered = session.query(CompoundActivityORM)
+            compound_activities_unfiltered = session.query(CompoundActivityORM).filter(
+                CompoundActivityORM.hidden == False
+            )
             compound_activities = (
                 compound_activities_unfiltered.filter(
                     CompoundActivityORM.tags.contains([tag])
@@ -423,6 +436,10 @@ def delete_compound_activity(domain: CompoundActivity):
 
     with SessionLocal() as session:
         orm = compound_activity_domain_to_orm(domain, session)
+        if orm is not None and not orm.custom:
+            orm.hidden = True
+            session.commit()
+            return
         target_id = orm.id
         session.query(CompoundActivityMissionORM).filter(
             CompoundActivityMissionORM.compound_activity_id == target_id

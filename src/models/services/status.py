@@ -106,6 +106,8 @@ def delete_attribute(domain: Attribute):
 
     with SessionLocal() as session:
         orm = attribute_domain_to_orm(domain, session)
+        if orm is not None and not orm.custom:
+            raise ValueError("Seeded attributes cannot be deleted")
         target_id = orm.id
         session.query(StatusAttributeORM).filter(
             StatusAttributeORM.attribute_id == target_id
