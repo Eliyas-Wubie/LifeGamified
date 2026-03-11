@@ -4,9 +4,13 @@ from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager
 from kivy.core.window import Window # type: ignore
 from kivy.properties import StringProperty, NumericProperty, ObjectProperty, ListProperty # type: ignore
+from src.controllers import accomplishment
+from src.controllers import activity
+from src.controllers import attribute
+from src.controllers import mission
+from src.controllers import profession
 from src.controllers import report
 from src.controllers import status
-from src.controllers import daily_report
 from kivy.uix.screenmanager import NoTransition 
 from src.models.db.session import init_db
 
@@ -29,7 +33,11 @@ class MyApp(App):
     detail = StringProperty("") # type: ignore
     report_controller = report
     status_controller = status
-    daily_report_controller = daily_report
+    activity_controller = activity
+    mission_controller = mission
+    attribute_controller = attribute
+    profession_controller = profession
+    accomplishment_controller = accomplishment
     profile =  ObjectProperty(None) # type: ignore
     def get_titles(self): # type: ignore
         res=""

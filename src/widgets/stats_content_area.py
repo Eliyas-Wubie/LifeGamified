@@ -50,10 +50,10 @@ class StatsContentArea(BoxLayout):
         
     def handle_report_submit(self,form, data): # type: ignore
         app=App.get_running_app() # type: ignore
-        app.daily_report_controller.make_a_report(data) # type: ignore
+        app.report_controller.make_report(data) # type: ignore
     def handle_mission_submit(self,form, data): # type: ignore
         app=App.get_running_app() # type: ignore
-        app.daily_report_controller.create_mission(data) # type: ignore
+        app.mission_controller.create_mission(data) # type: ignore
     def handle_compound_activity_submit(self,form, data): # type: ignore
         app=App.get_running_app() # type: ignore
-        app.daily_report_controller.create_compound_activity(data) # type: ignore
+        app.activity_controller.create_compound_activity(data) # type: ignore

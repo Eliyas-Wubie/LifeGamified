@@ -66,11 +66,11 @@ class ReportForm(BoxLayout):
         Clock.schedule_once(self._load_data)
     def _load_data(self, *_):
         app = App.get_running_app()
-        self.missions = app.daily_report_controller.get_missions()
-        self.daily_activities = app.daily_report_controller.get_daily_activities()
-        self.uncomfortable_activities = app.daily_report_controller.get_uncomfortable_activities()
-        self.generic_activities = app.daily_report_controller.get_generic_activities()
-        self.accomplishments = app.daily_report_controller.get_accomplishments()
+        self.missions = app.mission_controller.get_missions()
+        self.daily_activities = app.activity_controller.get_daily_activities()
+        self.uncomfortable_activities = app.activity_controller.get_uncomfortable_activities()
+        self.generic_activities = app.activity_controller.get_generic_activities()
+        self.accomplishments = app.accomplishment_controller.get_accomplishments()
 
     
     def submit_form(self):

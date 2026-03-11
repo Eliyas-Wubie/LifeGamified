@@ -46,7 +46,7 @@ class ReportsContentArea(BoxLayout):
         Clock.schedule_once(self._load_data)
     def _load_data(self, *_):
         app = App.get_running_app()
-        self.daily_reports = app.daily_report_controller.get_daily_reports() 
+        self.daily_reports = app.report_controller.get_reports() 
     
 
         

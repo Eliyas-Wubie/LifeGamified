@@ -41,6 +41,43 @@ def create_daily_report_orm(domain: DailyReport) -> DailyReportORM:
     return DailyReportORM(date=domain.date)
 
 
+def create_daily_report(domain: DailyReport) -> DailyReport:
+    from src.models.db.models import DailyReportCompoundActivityORM, DailyReportMissionORM
+    from src.models.services.activity import compound_activity_domain_to_orm
+    from src.models.services.mission import mission_domain_to_orm
+
+    with SessionLocal() as session:
+        orm = create_daily_report_orm(domain)
+        session.add(orm)
+        session.flush()
+
+        for compound_activity in domain.compound_activities:
+            compound_activity_orm = compound_activity_domain_to_orm(compound_activity, session)
+            if compound_activity_orm is None:
+                continue
+            session.add(
+                DailyReportCompoundActivityORM(
+                    daily_report_id=orm.id,
+                    compound_activity_id=compound_activity_orm.id,
+                )
+            )
+
+        for mission in domain.missions:
+            mission_orm = mission_domain_to_orm(mission, session)
+            if mission_orm is None:
+                continue
+            session.add(
+                DailyReportMissionORM(
+                    daily_report_id=orm.id,
+                    mission_id=mission_orm.id,
+                )
+            )
+
+        session.commit()
+        domain.id = orm.id
+        return domain
+
+
 def control_daily_report_compound_activity_link(
     control: str, domain: DailyReport, compound_activity: "CompoundActivity"
 ):
@@ -127,9 +164,7 @@ def control_daily_report_mission_link(
 
 
 def report_daily_activity(daily_report: "DailyReport"):
-    with SessionLocal() as session:
-        session.add(daily_report)
-        session.commit()
+    return create_daily_report(daily_report)
 
 
 def get_all_reports() -> list[DailyReport]:

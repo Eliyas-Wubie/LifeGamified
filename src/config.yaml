@@ -4,8 +4,8 @@ base_activities:
   - order
   - deduce
   - learn
-  - experience
-  - others
+  - experiance
+  - other
 
 valid_tags:
   - daily
@@ -39,11 +39,19 @@ punishments:
   - anti-value
 
 attributes:
-  - activeness
-  - courage
   - clarity
+  - memory
+  - thinking
+  - imagination
+  - acceptance
+  - activeness
+  - bravery
+  - trust
   - positivity
-  - strategy
+  - strength
+  - flexibility
+  - speed
+  - appearance
 
 profession_multiplier: 1
 base_activity_multiplier: 1

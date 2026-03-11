@@ -20,7 +20,7 @@ class ProfessionsContentArea(BoxLayout):
         Clock.schedule_once(self._load_data)
     def _load_data(self, *_):
         app = App.get_running_app()
-        self.professions = app.daily_report_controller.get_professions() 
+        self.professions = app.profession_controller.get_professions() 
         
     def test(self):
         print("test")

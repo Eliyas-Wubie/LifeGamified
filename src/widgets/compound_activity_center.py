@@ -30,7 +30,7 @@ class CompoundActivityCenter(BoxLayout):
         self.ids.list.items = new_compound_activities
     def delete(self, item):
         app = App.get_running_app()
-        app.daily_report_controller.delete_compound_activity(item) 
+        app.activity_controller.delete_compound_activity(item) 
         new_compound_activities=[]
         for compound_activity in self.compound_activities:
             if compound_activity.name != item.name:
@@ -48,7 +48,7 @@ class CompoundActivityCenter(BoxLayout):
         Clock.schedule_once(self._load_data)
     def _load_data(self, *_):
         app = App.get_running_app()
-        self.compound_activities = app.daily_report_controller.get_compound_activities() 
+        self.compound_activities = app.activity_controller.get_compound_activities() 
     
     
     # may not be used   

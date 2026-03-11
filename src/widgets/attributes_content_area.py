@@ -21,7 +21,7 @@ class AttributesContentArea(BoxLayout):
         Clock.schedule_once(self._load_data)
     def _load_data(self, *_):
         app = App.get_running_app()
-        self.attributes = app.daily_report_controller.get_attributes() 
+        self.attributes = app.attribute_controller.get_attributes() 
     def switch_to_selector(self):
         self.ids.sm.current = "selector"
     def switch_to_detail(self, area):

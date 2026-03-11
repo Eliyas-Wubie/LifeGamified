@@ -28,7 +28,7 @@ class MissionCenter(BoxLayout):
         self.ids.list.items = new_mission
     def delete(self, item):
         app = App.get_running_app()
-        app.daily_report_controller.delete_mission(item) 
+        app.mission_controller.delete_mission(item) 
         new_mission=[]
         for mission in self.missions:
             if mission.name != item.name:
@@ -46,7 +46,7 @@ class MissionCenter(BoxLayout):
         Clock.schedule_once(self._load_data)
     def _load_data(self, *_):
         app = App.get_running_app()
-        self.missions = app.daily_report_controller.get_missions() 
+        self.missions = app.mission_controller.get_missions() 
     
     
     # may not be used   
